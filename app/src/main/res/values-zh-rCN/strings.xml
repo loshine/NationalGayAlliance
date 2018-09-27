@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">恩基爱</string>
+    <string name="navigation_main_forum">论坛</string>
+    <string name="navigation_main_match">赛事</string>
+    <string name="navigation_main_message">消息</string>
+    <string name="navigation_main_account">账号</string>
+</resources>
