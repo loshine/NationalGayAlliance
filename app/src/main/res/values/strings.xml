@@ -4,4 +4,6 @@
     <string name="navigation_main_match">Match</string>
     <string name="navigation_main_message">Message</string>
     <string name="navigation_main_account">Account</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

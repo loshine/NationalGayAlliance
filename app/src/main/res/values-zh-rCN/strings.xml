@@ -4,4 +4,6 @@
     <string name="navigation_main_match">赛事</string>
     <string name="navigation_main_message">消息</string>
     <string name="navigation_main_account">账号</string>
+    <string name="navigation_drawer_open">打开导航抽屉</string>
+    <string name="navigation_drawer_close">关闭导航抽屉</string>
 </resources>
