@@ -5,6 +5,7 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
+import xyz.loshine.nga.data.DataModule
 import xzy.loshine.nga.App
 import xzy.loshine.nga.di.modules.ActivityBindingModule
 import xzy.loshine.nga.di.modules.AppModule
@@ -13,6 +14,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [
     AppModule::class,
+    DataModule::class,
     ActivityBindingModule::class,
     AndroidSupportInjectionModule::class
 ])

@@ -15,6 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        app:itemBackground="@drawable/menu_navigation_main_bg"
         app:headerLayout="@layout/layout_header_main"
         app:menu="@menu/navigation_main">
 

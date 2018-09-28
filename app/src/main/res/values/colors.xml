@@ -5,4 +5,8 @@
     <color name="colorAccent">#A5D6A7</color>
     <color name="colorBackground">#fff9e3</color>
     <color name="colorDivider">#BDBDBD</color>
+
+    <color name="color_menu_navigation_bg">#26000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="colorTabNormal">#BCAAA4</color>
 </resources>
