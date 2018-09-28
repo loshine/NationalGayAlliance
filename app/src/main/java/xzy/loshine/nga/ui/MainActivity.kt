@@ -3,6 +3,7 @@ package xzy.loshine.nga.ui
 import android.animation.ObjectAnimator
 import android.animation.StateListAnimator
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import dagger.Lazy
@@ -47,12 +48,19 @@ class MainActivity : EasyActivity(R.layout.activity_main) {
                 .commit()
     }
 
+    private var lastTime: Long = 0
+
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed()
+            val currentTime = System.currentTimeMillis()
+            if (currentTime - lastTime < 2 * 1000) {
+                super.onBackPressed()
+            } else {
+                Toast.makeText(this, "再按一次返回键退出应用", Toast.LENGTH_SHORT).show()
+                lastTime = currentTime
+            }
         }
     }
-
 }

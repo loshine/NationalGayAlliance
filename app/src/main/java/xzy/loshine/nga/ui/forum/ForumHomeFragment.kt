@@ -44,6 +44,7 @@ class ForumHomeFragment @Inject constructor() : BaseFragment(R.layout.fragment_f
     private fun initCategories(categories: List<ForumBoardCategory>) {
         val adapter = ForumHomePagerAdapter(childFragmentManager, categories)
         view_pager.adapter = adapter
+        view_pager.offscreenPageLimit = categories.size
         tab_layout.setupWithViewPager(view_pager)
     }
 }

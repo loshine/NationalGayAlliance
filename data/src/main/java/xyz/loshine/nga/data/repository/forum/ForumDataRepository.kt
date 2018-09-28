@@ -14,48 +14,38 @@ class ForumDataRepository @Inject constructor() : ForumRepository {
 
     override fun getForumBoardCategories(): Flowable<List<ForumBoardCategory>> {
         if (categoryList.isEmpty()) {
-            var boardList: List<ForumBoard> = listOf(
+            var boardList: MutableList<ForumBoard> = mutableListOf(
                     ForumBoard(-7, "大漩涡", categoryList.size),
+                    ForumBoard(-187579, "历史博物馆", categoryList.size),
+                    ForumBoard(-447601, "二次元", categoryList.size),
+                    ForumBoard(-353371, "宠物养成", categoryList.size),
                     ForumBoard(-343809, "汽车俱乐部", categoryList.size),
                     ForumBoard(-81981, "生命之杯", categoryList.size),
+                    ForumBoard(485, "篮球", categoryList.size),
                     ForumBoard(-576177, "影音讨论区", categoryList.size),
                     ForumBoard(414, "游戏综合讨论", categoryList.size),
                     ForumBoard(436, "消费电子 IT新闻", categoryList.size),
-                    ForumBoard(498, "二手交易", categoryList.size),
-                    ForumBoard(-187579, "大漩涡历史博物馆", categoryList.size),
-                    ForumBoard(485, "篮球", categoryList.size)
+                    ForumBoard(334, "硬件配置", categoryList.size),
+                    ForumBoard(498, "二手交易", categoryList.size)
             )
-            var category = ForumBoardCategory("大漩涡系列", categoryList.size, boardList)
+            var category = ForumBoardCategory("网事杂谈", categoryList.size, boardList)
             categoryList.add(category)
 
-            boardList = listOf(
+            boardList = mutableListOf(
                     ForumBoard(7, "议事厅", categoryList.size),
-                    ForumBoard(310, "精英议会", categoryList.size),
-                    ForumBoard(323, "国服以外讨论", categoryList.size),
-                    ForumBoard(10, "银色黎明", categoryList.size),
-                    ForumBoard(230, "风纪委员会", categoryList.size)
-            )
-            category = ForumBoardCategory("综合讨论", categoryList.size, boardList)
-            categoryList.add(category)
-
-            boardList = listOf(
-                    ForumBoard(390, "五晨寺", categoryList.size),
-                    ForumBoard(320, "黑锋要塞", categoryList.size),
                     ForumBoard(181, "铁血沙场", categoryList.size),
-                    ForumBoard(182, "魔法圣堂", categoryList.size),
-                    ForumBoard(183, "信仰神殿", categoryList.size),
-                    ForumBoard(185, "风暴祭坛", categoryList.size),
-                    ForumBoard(186, "翡翠梦境", categoryList.size),
+                    ForumBoard(184, "圣光广场", categoryList.size),
+                    ForumBoard(320, "黑锋要塞", categoryList.size),
                     ForumBoard(187, "猎手大厅", categoryList.size),
-                    ForumBoard(184, "圣光之力", categoryList.size),
-                    ForumBoard(188, "恶魔深渊", categoryList.size),
+                    ForumBoard(185, "风暴祭坛", categoryList.size),
                     ForumBoard(189, "暗影裂口", categoryList.size),
-                    ForumBoard(477, "伊利达雷", categoryList.size)
-            )
-            category = ForumBoardCategory("职业讨论区", categoryList.size, boardList)
-            categoryList.add(category)
+                    ForumBoard(186, "翡翠梦境", categoryList.size),
+                    ForumBoard(477, "伊利达雷", categoryList.size),
+                    ForumBoard(390, "五晨寺", categoryList.size),
+                    ForumBoard(182, "魔法圣堂", categoryList.size),
+                    ForumBoard(188, "恶魔深渊", categoryList.size),
+                    ForumBoard(183, "信仰神殿", categoryList.size),
 
-            boardList = listOf(
                     ForumBoard(310, "精英议会", categoryList.size),
                     ForumBoard(190, "任务讨论", categoryList.size),
                     ForumBoard(213, "战争档案", categoryList.size),
@@ -71,54 +61,68 @@ class ForumDataRepository @Inject constructor() : ForumRepository {
                     ForumBoard(388, "幻化讨论", categoryList.size),
                     ForumBoard(411, "宠物讨论", categoryList.size),
                     ForumBoard(255, "公会管理", categoryList.size),
-                    ForumBoard(306, "人员招募", categoryList.size)
-            )
-            category = ForumBoardCategory("冒险心得", categoryList.size, boardList)
-            categoryList.add(category)
+                    ForumBoard(306, "人员招募", categoryList.size),
 
-            boardList = listOf(
                     ForumBoard(264, "卡拉赞剧院", categoryList.size),
                     ForumBoard(8, "大图书馆", categoryList.size),
                     ForumBoard(102, "作家协会", categoryList.size),
                     ForumBoard(124, "壁画洞窟", categoryList.size),
                     ForumBoard(254, "镶金玫瑰", categoryList.size),
                     ForumBoard(355, "龟岩兄弟会", categoryList.size),
-                    ForumBoard(116, "奇迹之泉", categoryList.size)
+                    ForumBoard(116, "奇迹之泉", categoryList.size),
+
+                    ForumBoard(323, "国服以外", categoryList.size),
+                    ForumBoard(10, "银色黎明", categoryList.size),
+                    ForumBoard(230, "风纪委员会", categoryList.size)
             )
-            category = ForumBoardCategory("麦迪文之塔", categoryList.size, boardList)
+            category = ForumBoardCategory("魔兽世界", categoryList.size, boardList)
             categoryList.add(category)
 
-            boardList = listOf(
-                    ForumBoard(193, "帐号安全", categoryList.size),
-                    ForumBoard(334, "PC软硬件", categoryList.size),
-                    ForumBoard(201, "系统问题", categoryList.size),
-                    ForumBoard(335, "网站开发", categoryList.size)
-            )
-            category = ForumBoardCategory("系统软硬件讨论", categoryList.size, boardList)
-            categoryList.add(category)
-
-            boardList = listOf(
-                    ForumBoard(422, "炉石传说", categoryList.size),
-                    ForumBoard(431, "风暴英雄", categoryList.size),
+            boardList = mutableListOf(
                     ForumBoard(459, "守望先锋", categoryList.size),
+                    ForumBoard(422, "炉石传说", categoryList.size),
                     ForumBoard(318, "暗黑破坏神3", categoryList.size),
-                    ForumBoard(490, "魔兽争霸", categoryList.size),
-                    ForumBoard(406, "星际争霸2", categoryList.size)
+                    ForumBoard(431, "风暴英雄", categoryList.size),
+                    ForumBoard(406, "星际争霸2", categoryList.size),
+                    ForumBoard(490, "魔兽争霸", categoryList.size)
             )
             category = ForumBoardCategory("暴雪游戏", categoryList.size, boardList)
             categoryList.add(category)
 
-            boardList = listOf(
+            boardList = mutableListOf(
+                    ForumBoard(-152678, "英雄联盟", categoryList.size),
+                    ForumBoard(479, "英雄联盟赛事", categoryList.size),
+                    ForumBoard(418, "英雄联盟视频", categoryList.size)
+            )
+            category = ForumBoardCategory("拳头游戏", categoryList.size, boardList)
+            categoryList.add(category)
+
+            boardList = mutableListOf(
+                    ForumBoard(482, "CS:GO", categoryList.size),
+                    ForumBoard(321, "DOTA2", categoryList.size),
+                    ForumBoard(622, "刀塔卡牌 Artifact", categoryList.size)
+            )
+            category = ForumBoardCategory("Valve Games", categoryList.size, boardList)
+            categoryList.add(category)
+
+            boardList = mutableListOf(
+                    ForumBoard(614, "PlayStation", categoryList.size),
+                    ForumBoard(615, "XBox", categoryList.size),
+                    ForumBoard(616, "Nintendo", categoryList.size)
+            )
+            category = ForumBoardCategory("主机游戏", categoryList.size, boardList)
+            categoryList.add(category)
+
+            boardList = mutableListOf(
                     ForumBoard(414, "游戏综合讨论", categoryList.size),
                     ForumBoard(428, "手机游戏", categoryList.size),
-                    ForumBoard(-152678, "英雄联盟", categoryList.size),
                     ForumBoard(-452227, "口袋妖怪", categoryList.size),
                     ForumBoard(426, "智龙迷城", categoryList.size),
                     ForumBoard(-51095, "部落冲突", categoryList.size),
                     ForumBoard(492, "部落冲突:皇室战争", categoryList.size),
                     ForumBoard(-362960, "最终幻想14", categoryList.size),
                     ForumBoard(-6194253, "战争雷霆", categoryList.size),
-                    ForumBoard(427, "怪物猎人", categoryList.size),
+                    ForumBoard(489, "怪物猎人", categoryList.size),
                     ForumBoard(-47218, "地下城与勇士", categoryList.size),
                     ForumBoard(425, "行星边际2", categoryList.size),
                     ForumBoard(-65653, "剑灵", categoryList.size),
@@ -128,7 +132,6 @@ class ForumDataRepository @Inject constructor() : ForumRepository {
                     ForumBoard(-46468, "洛拉斯的战争世界", categoryList.size),
                     ForumBoard(432, "战机世界", categoryList.size),
                     ForumBoard(441, "战舰世界", categoryList.size),
-                    ForumBoard(321, "DotA", categoryList.size),
                     ForumBoard(-2371813, "EVE", categoryList.size),
                     ForumBoard(-7861121, "剑叁 ", categoryList.size),
                     ForumBoard(448, "剑叁同人 ", categoryList.size),
@@ -153,7 +156,6 @@ class ForumDataRepository @Inject constructor() : ForumRepository {
                     ForumBoard(455, "鬼武者 魂", categoryList.size),
                     ForumBoard(480, "百万亚瑟王", categoryList.size),
                     ForumBoard(481, "Minecraft", categoryList.size),
-                    ForumBoard(482, "CS", categoryList.size),
                     ForumBoard(484, "热血江湖传", categoryList.size),
                     ForumBoard(486, "辐射", categoryList.size),
                     ForumBoard(487, "刀剑魔药2", categoryList.size),
@@ -166,7 +168,16 @@ class ForumDataRepository @Inject constructor() : ForumRepository {
             category = ForumBoardCategory("其他游戏", categoryList.size, boardList)
             categoryList.add(category)
 
-            boardList = listOf(
+            boardList = mutableListOf(
+                    ForumBoard(193, "帐号安全", categoryList.size),
+                    ForumBoard(334, "PC软硬件", categoryList.size),
+                    ForumBoard(201, "系统问题", categoryList.size),
+                    ForumBoard(335, "网站开发", categoryList.size)
+            )
+            category = ForumBoardCategory("系统软硬件讨论", categoryList.size, boardList)
+            categoryList.add(category)
+
+            boardList = mutableListOf(
                     ForumBoard(-447601, "二次元国家地理", categoryList.size),
                     ForumBoard(-84, "模玩之魂", categoryList.size),
                     ForumBoard(-8725919, "小窗视界", categoryList.size),
@@ -188,7 +199,7 @@ class ForumDataRepository @Inject constructor() : ForumRepository {
                     ForumBoard(-314508, "世界尽头的百货公司", categoryList.size),
                     ForumBoard(-2671, "耳机区", categoryList.size),
                     ForumBoard(-970841, "东方教主陈乔恩", categoryList.size),
-                    ForumBoard(-3355501, "基腐版", categoryList.size),
+                    ForumBoard(-3355501, "彩虹天堂", categoryList.size),
                     ForumBoard(-403298, "怨灵图纸收藏室", categoryList.size),
                     ForumBoard(-3432136, "飘落的诗章", categoryList.size),
                     ForumBoard(-187628, "家居 装修", categoryList.size),
