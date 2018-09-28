@@ -43,9 +43,11 @@ class MainActivity : EasyActivity(R.layout.activity_main) {
         val stateListAnimator = StateListAnimator()
         stateListAnimator.addState(IntArray(0), ObjectAnimator.ofFloat(app_bar_layout, "elevation", 0f))
         app_bar_layout.stateListAnimator = stateListAnimator
-        supportFragmentManager.beginTransaction()
-                .add(R.id.container, forumHomeFragmentProvider.get())
-                .commit()
+        if (supportFragmentManager.findFragmentById(R.id.container) == null) {
+            supportFragmentManager.beginTransaction()
+                    .add(R.id.container, forumHomeFragmentProvider.get())
+                    .commit()
+        }
     }
 
     private var lastTime: Long = 0

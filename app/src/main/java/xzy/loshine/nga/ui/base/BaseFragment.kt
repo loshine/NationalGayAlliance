@@ -1,5 +1,6 @@
 package xzy.loshine.nga.ui.base
 
+import android.os.Bundle
 import androidx.annotation.CallSuper
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -13,9 +14,14 @@ abstract class BaseFragment(layoutResId: Int? = null) : EasyFragment(layoutResId
 
     private val compositeDisposable = CompositeDisposable()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+    }
+
     @CallSuper
     override fun unBindViewModel() {
-        compositeDisposable.dispose()
+        compositeDisposable.clear()
     }
 
     fun addDisposable(disposable: Disposable) {
