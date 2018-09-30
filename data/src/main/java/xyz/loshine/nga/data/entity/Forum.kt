@@ -3,7 +3,7 @@ package xyz.loshine.nga.data.entity
 import android.os.Parcel
 import android.os.Parcelable
 
-data class ForumBoard(
+data class Forum(
         val fid: Int,
         val name: String,
         val category: Int
@@ -24,9 +24,9 @@ data class ForumBoard(
 
     companion object {
         @JvmField
-        val CREATOR: Parcelable.Creator<ForumBoard> = object : Parcelable.Creator<ForumBoard> {
-            override fun createFromParcel(source: Parcel): ForumBoard = ForumBoard(source)
-            override fun newArray(size: Int): Array<ForumBoard?> = arrayOfNulls(size)
+        val CREATOR: Parcelable.Creator<Forum> = object : Parcelable.Creator<Forum> {
+            override fun createFromParcel(source: Parcel): Forum = Forum(source)
+            override fun newArray(size: Int): Array<Forum?> = arrayOfNulls(size)
         }
     }
 }

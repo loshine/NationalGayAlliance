@@ -11,14 +11,14 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_main_content.*
 import xzy.loshine.nga.R
 import xzy.loshine.nga.ui.base.EasyActivity
-import xzy.loshine.nga.ui.forum.ForumHomeFragment
+import xzy.loshine.nga.ui.forumgrouppager.ForumGroupPagerFragment
 import javax.inject.Inject
 
 
 class MainActivity : EasyActivity(R.layout.activity_main) {
 
     @Inject
-    lateinit var forumHomeFragmentProvider: Lazy<ForumHomeFragment>
+    lateinit var forumGroupPagerFragmentProvider: Lazy<ForumGroupPagerFragment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +45,7 @@ class MainActivity : EasyActivity(R.layout.activity_main) {
         app_bar_layout.stateListAnimator = stateListAnimator
         if (supportFragmentManager.findFragmentById(R.id.container) == null) {
             supportFragmentManager.beginTransaction()
-                    .add(R.id.container, forumHomeFragmentProvider.get())
+                    .add(R.id.container, forumGroupPagerFragmentProvider.get())
                     .commit()
         }
     }

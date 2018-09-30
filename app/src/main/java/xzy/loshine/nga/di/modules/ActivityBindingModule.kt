@@ -4,13 +4,17 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import xzy.loshine.nga.di.scopes.ActivityScoped
 import xzy.loshine.nga.ui.MainActivity
-import xzy.loshine.nga.ui.forum.ForumHomeModule
-import xzy.loshine.nga.ui.mybookmarkcategory.MyBookmarkCategoryModule
+import xzy.loshine.nga.ui.forum.ForumActivity
+import xzy.loshine.nga.ui.forumgrouppager.ForumGroupPagerModule
 
 @Module
 interface ActivityBindingModule {
 
     @ActivityScoped
-    @ContributesAndroidInjector(modules = [ForumHomeModule::class])
+    @ContributesAndroidInjector(modules = [ForumGroupPagerModule::class])
     fun mainActivity(): MainActivity
+
+    @ActivityScoped
+    @ContributesAndroidInjector
+    fun boardActivity(): ForumActivity
 }

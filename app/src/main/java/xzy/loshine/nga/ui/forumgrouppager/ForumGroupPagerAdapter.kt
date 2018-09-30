@@ -1,10 +1,10 @@
-package xzy.loshine.nga.ui.forum
+package xzy.loshine.nga.ui.forumgrouppager
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 
-class ForumHomePagerAdapter(
+class ForumGroupPagerAdapter(
         fm: FragmentManager,
         val fragmentList: List<Fragment>,
         val titleList: List<String>

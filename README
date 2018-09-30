@@ -1,0 +1,9 @@
+# NationalGayAlliance
+
+一个尝试性的 Nga Android 客户端，尚在开发中。
+
+## Api 整理
+
+* [板块列表](https://bbs.nga.cn/app_api.php?__lib=home&__act=category)
+* [帖子列表](https://bbs.nga.cn/thread.php?fid=-7&page=1&lite=js&noprefix)
+* [帖子详情](https://bbs.nga.cn/read.php?page=1&lite=js&noprefix&v2&tid=15007486)

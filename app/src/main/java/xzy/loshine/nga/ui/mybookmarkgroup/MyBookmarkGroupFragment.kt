@@ -1,4 +1,4 @@
-package xzy.loshine.nga.ui.mybookmarkcategory
+package xzy.loshine.nga.ui.mybookmarkgroup
 
 import xzy.loshine.nga.R
 import xzy.loshine.nga.di.scopes.ActivityScoped
@@ -6,7 +6,7 @@ import xzy.loshine.nga.ui.base.BaseFragment
 import javax.inject.Inject
 
 @ActivityScoped
-class MyBookmarkCategoryFragment @Inject constructor() : BaseFragment(R.layout.fragment_my_bookmark_category) {
+class MyBookmarkGroupFragment @Inject constructor() : BaseFragment(R.layout.fragment_my_bookmark_group) {
 
     override fun bindViewModel() {
 

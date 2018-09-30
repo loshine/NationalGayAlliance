@@ -1,13 +1,13 @@
-package xzy.loshine.nga.ui.mybookmarkcategory
+package xzy.loshine.nga.ui.mybookmarkgroup
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import xzy.loshine.nga.di.scopes.FragmentScoped
 
 @Module
-interface MyBookmarkCategoryModule {
+interface MyBookmarkGroupModule {
 
     @FragmentScoped
     @ContributesAndroidInjector
-    fun myBookmarkCategoryFragment(): MyBookmarkCategoryFragment
+    fun myBookmarkCategoryFragment(): MyBookmarkGroupFragment
 }
