@@ -8,8 +8,8 @@ package xyz.loshine.nga.data.entity
  *    "time": 1538302785
  * }
  */
-data class SiteApiResult(
-        val data: SiteApiResultData,
+data class SiteApiResult<T>(
+        val data: T,
         val encode: String,
         val time: Long
 )
