@@ -46,11 +46,18 @@ class ForumFragment @Inject constructor() : BaseFragment(R.layout.fragment_forum
     }
 
     private fun refresh() {
-        addDisposable(viewModel.refresh().subscribe({ adapter.setNewData(it) }, { it.printStackTrace() }))
+        addDisposable(viewModel.refresh()
+                .observeOn(schedulerProvider.ui())
+                .subscribe({ adapter.setNewData(it) }, { it.printStackTrace() }))
     }
 
     private fun loadMore() {
-        addDisposable(viewModel.loadMore().subscribe({ adapter.addData(it) }, { it.printStackTrace() }))
+        addDisposable(viewModel.loadMore()
+                .observeOn(schedulerProvider.ui())
+                .subscribe({
+                    adapter.addData(it)
+                    adapter.loadMoreComplete()
+                }, { it.printStackTrace() }))
     }
 
 }

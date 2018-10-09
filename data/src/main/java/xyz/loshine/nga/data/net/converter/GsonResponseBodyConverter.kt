@@ -16,7 +16,7 @@ internal class GsonResponseBodyConverter<T>(private val gson: Gson, private val 
         // gbk 编码
         var string = String(value.bytes(), Charset.forName("gbk"))
         // 处理掉不合 json 规范的字符
-        if (string.contains(",\"2\":\"")) {
+        if (string.startsWith("{\"data\":{\"__MESSAGE\":{")) {
             string = string.replace(Regex(",\"2\":\"[\\s\\S]*,\"3\":"), ",\"3\":")
         }
         val result = gson.fromJson(string, JsonObject::class.java)

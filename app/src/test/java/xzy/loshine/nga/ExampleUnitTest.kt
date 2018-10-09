@@ -20,4 +20,9 @@ class ExampleUnitTest {
         json = json.replace(Regex(",\"2\":\"[\\s\\S]*,\"3\":"), ",\"3\":")
         println(json)
     }
+
+    @Test
+    fun format(){
+        println("-7.0".toIntOrNull())
+    }
 }

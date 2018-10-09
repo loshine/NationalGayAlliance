@@ -14,11 +14,11 @@ import javax.inject.Singleton
 class UserDataRepository @Inject constructor() : UserRepository {
 
     companion object {
-        private const val TAG_UID = "ngaPassportUid"
-        private const val TAG_CID = "ngaPassportCid"
+        const val TAG_UID = "ngaPassportUid"
+        const val TAG_CID = "ngaPassportCid"
         private const val TAG_USER_NAME = "ngaPassportUrlencodedUname"
 
-        private const val KEY_USER = "USER"
+        const val KEY_USER = "USER"
     }
 
     override fun saveLoginCookies(cookies: String): Flowable<User> {
