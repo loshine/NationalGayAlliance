@@ -9,13 +9,17 @@ import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.CallAdapter
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import xyz.loshine.nga.data.net.api.NgaApi
+import xyz.loshine.nga.data.net.converter.GsonErrorConverterFactory
 import xyz.loshine.nga.data.repository.forum.ForumDataRepository
 import xyz.loshine.nga.data.repository.forum.ForumRepository
+import xyz.loshine.nga.data.repository.user.UserDataRepository
+import xyz.loshine.nga.data.repository.user.UserRepository
 import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -52,6 +56,7 @@ class DataModule {
     @Provides
     fun okHttpClient(cache: Cache): OkHttpClient = OkHttpClient.Builder()
             .cache(cache)
+            .addInterceptor(HttpLoggingInterceptor().also { it.level = HttpLoggingInterceptor.Level.BASIC })
             .connectTimeout(HTTP_CONNECT_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(HTTP_READ_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(HTTP_WRITE_TIMEOUT, TimeUnit.SECONDS)
@@ -63,7 +68,7 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun converterFactory(gson: Gson): Converter.Factory = GsonConverterFactory.create(gson)
+    fun converterFactory(gson: Gson): Converter.Factory = GsonErrorConverterFactory.create(gson)
 
     @Singleton
     @Provides
@@ -82,5 +87,13 @@ class DataModule {
 
     @Singleton
     @Provides
+    fun ngaApi(retrofit: Retrofit): NgaApi = retrofit.create(NgaApi::class.java)
+
+    @Singleton
+    @Provides
     fun forumRepository(forumDataRepository: ForumDataRepository): ForumRepository = forumDataRepository
+
+    @Singleton
+    @Provides
+    fun userRepository(userDataRepository: UserDataRepository): UserRepository = userDataRepository
 }

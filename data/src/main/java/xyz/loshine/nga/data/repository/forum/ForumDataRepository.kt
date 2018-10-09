@@ -3,12 +3,14 @@ package xyz.loshine.nga.data.repository.forum
 import io.reactivex.Flowable
 import xyz.loshine.nga.data.entity.Forum
 import xyz.loshine.nga.data.entity.ForumGroup
+import xyz.loshine.nga.data.entity.PostListData
+import xyz.loshine.nga.data.net.api.NgaApi
 import javax.inject.Inject
 import javax.inject.Singleton
 
 
 @Singleton
-class ForumDataRepository @Inject constructor() : ForumRepository {
+class ForumDataRepository @Inject constructor(private val ngaApi: NgaApi) : ForumRepository {
 
     private val categoryList: MutableList<ForumGroup> = mutableListOf()
 
@@ -212,4 +214,8 @@ class ForumDataRepository @Inject constructor() : ForumRepository {
         return Flowable.just(categoryList)
     }
 
+    override fun getForumPostList(fid: Int, index: Int): Flowable<PostListData> {
+        return ngaApi.getThreadList(fid, index)
+                .map { it.data }
+    }
 }

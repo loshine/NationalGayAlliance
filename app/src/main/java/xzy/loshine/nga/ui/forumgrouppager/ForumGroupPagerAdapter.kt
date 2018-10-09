@@ -6,8 +6,8 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 
 class ForumGroupPagerAdapter(
         fm: FragmentManager,
-        val fragmentList: List<Fragment>,
-        val titleList: List<String>
+        private val fragmentList: List<Fragment>,
+        private val titleList: List<String>
 ) : FragmentStatePagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {

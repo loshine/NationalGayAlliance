@@ -5,7 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import xyz.loshine.nga.data.entity.AppApiResult
 import xyz.loshine.nga.data.entity.SiteApiResult
-import xyz.loshine.nga.data.entity.ThreadListData
+import xyz.loshine.nga.data.entity.PostListData
 
 interface NgaApi {
 
@@ -14,7 +14,7 @@ interface NgaApi {
 
     @GET("thread.php?lite=js&noprefix")
     fun getThreadList(@Query("fid") fid: Int,
-                      @Query("page") index: Int): Flowable<SiteApiResult<ThreadListData>>
+                      @Query("page") index: Int): Flowable<SiteApiResult<PostListData>>
 
     @GET("read.php?lite=js&noprefix&v2")
     fun getThreadDetail(@Query("tid") tid: Int,

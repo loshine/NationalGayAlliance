@@ -2,6 +2,7 @@ package xzy.loshine.nga.ui
 
 import android.animation.ObjectAnimator
 import android.animation.StateListAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -12,6 +13,7 @@ import kotlinx.android.synthetic.main.include_main_content.*
 import xzy.loshine.nga.R
 import xzy.loshine.nga.ui.base.EasyActivity
 import xzy.loshine.nga.ui.forumgrouppager.ForumGroupPagerFragment
+import xzy.loshine.nga.ui.login.LoginActivity
 import javax.inject.Inject
 
 
@@ -28,9 +30,9 @@ class MainActivity : EasyActivity(R.layout.activity_main) {
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
-        navigation_view.setNavigationItemSelectedListener { menuItem ->
+        navigation_view.setNavigationItemSelectedListener {
             // set item as selected to persist highlight
-            menuItem.isChecked = true
+            it.isChecked = true
             // close drawer when item is tapped
             drawer_layout.closeDrawers()
 
@@ -40,6 +42,9 @@ class MainActivity : EasyActivity(R.layout.activity_main) {
             true
         }
 
+        navigation_view.getHeaderView(0).setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
         val stateListAnimator = StateListAnimator()
         stateListAnimator.addState(IntArray(0), ObjectAnimator.ofFloat(app_bar_layout, "elevation", 0f))
         app_bar_layout.stateListAnimator = stateListAnimator

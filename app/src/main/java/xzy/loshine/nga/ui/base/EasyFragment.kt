@@ -13,4 +13,8 @@ abstract class EasyFragment(private val layoutResId: Int? = null) : DaggerFragme
         if (layoutResId == null) return null
         return inflater.inflate(layoutResId, container, false)
     }
+
+    open fun onBackPressed(): Boolean {
+        return false
+    }
 }
