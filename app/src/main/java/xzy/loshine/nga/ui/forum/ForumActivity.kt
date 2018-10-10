@@ -17,7 +17,10 @@ class ForumActivity : EasyActivity(R.layout.activity_forum) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        toolbar.title = intent.getStringExtra("name")
+
         setSupportActionBar(toolbar)
+
         toolbar.navigationIcon?.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
         toolbar.setNavigationOnClickListener { onBackPressed() }
 

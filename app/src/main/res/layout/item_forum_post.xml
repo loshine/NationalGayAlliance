@@ -19,14 +19,54 @@
         tools:text="这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题" />
 
     <TextView
-        android:id="@+id/author"
+        android:id="@+id/parent_name"
         style="@style/TextAppearance.AppCompat.Caption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="@id/title"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:visibility="gone"
+        android:drawablePadding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title"
+        tools:text="[板块名字]"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/author"
+        style="@style/TextAppearance.AppCompat.Caption"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:drawableStart="@drawable/ic_author_small"
+        android:drawablePadding="8dp"
+        android:ellipsize="end"
+        app:layout_constraintStart_toStartOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/parent_name"
         tools:text="这里是作者作者作者" />
+
+    <TextView
+        android:id="@+id/time"
+        style="@style/TextAppearance.AppCompat.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_clock_small"
+        android:drawablePadding="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/author"
+        app:layout_constraintEnd_toEndOf="@id/title"
+        tools:text="2014-01-01" />
+
+    <TextView
+        android:id="@+id/comment_count"
+        style="@style/TextAppearance.AppCompat.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:drawableStart="@drawable/ic_comment_small"
+        android:drawablePadding="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/author"
+        app:layout_constraintEnd_toStartOf="@id/time"
+        tools:text="123" />
 
     <View
         android:layout_width="match_parent"

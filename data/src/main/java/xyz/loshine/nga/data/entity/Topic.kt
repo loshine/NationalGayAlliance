@@ -13,7 +13,7 @@ data class Topic(
         val quoteTo: String = "",
         val icon: Int = 0,
         @SerializedName("postdate")
-        val postDate: Int = 0,
+        val postDate: Long = 0,
         val recommend: Int = 0,
         @SerializedName("authorid")
         val authorId: Int = 0,
@@ -23,11 +23,12 @@ data class Topic(
         @SerializedName("lastposter")
         val lastPoster: String = "",
         @SerializedName("lastpost")
-        val lastPost: Int = 0,
+        val lastPost: Long = 0,
         @SerializedName("topic_misc")
         val topicMisc: String = "",
         @SerializedName("lastmodify")
-        val lastModify: Int = 0
+        val lastModify: Long = 0,
+        val parent: TopicParent? = null
 ) {
     constructor(map: Map<String, Any>) : this(
             map["fid"]?.toString()?.toDouble()?.toInt() ?: 0,
@@ -37,15 +38,18 @@ data class Topic(
             map["subject"]?.toString() ?: "",
             map["quote_to"]?.toString() ?: "",
             map["icon"]?.toString()?.toDouble()?.toInt() ?: 0,
-            map["postdate"]?.toString()?.toDouble()?.toInt() ?: 0,
+            map["postdate"]?.toString()?.toDouble()?.toLong() ?: 0,
             map["recommend"]?.toString()?.toDouble()?.toInt() ?: 0,
             map["authorid"]?.toString()?.toDoubleOrNull()?.toInt() ?: 0,
             map["type"]?.toString()?.toDouble()?.toInt() ?: 0,
             map["tid"]?.toString()?.toDouble()?.toInt() ?: 0,
             map["replies"]?.toString()?.toDouble()?.toInt() ?: 0,
             map["lastposter"]?.toString() ?: "",
-            map["lastpost"]?.toString()?.toDouble()?.toInt() ?: 0,
+            map["lastpost"]?.toString()?.toDouble()?.toLong() ?: 0,
             map["topic_misc"]?.toString() ?: "",
-            map["lastmodify"]?.toString()?.toDouble()?.toInt() ?: 0
+            map["lastmodify"]?.toString()?.toDouble()?.toLong() ?: 0,
+            (map["parent"] as Map<*, *>?)?.get("2")?.toString()?.let { TopicParent(it) }
     )
+
+    data class TopicParent(val name: String)
 }

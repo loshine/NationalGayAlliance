@@ -18,9 +18,10 @@ class LoginActivity : EasyActivity(R.layout.activity_login) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setSupportActionBar(toolbar)
         toolbar.navigationIcon?.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
         toolbar.setNavigationOnClickListener { onBackPressed() }
+
+        setSupportActionBar(toolbar)
 
         if (supportFragmentManager.findFragmentById(R.id.container) == null) {
             supportFragmentManager.beginTransaction()

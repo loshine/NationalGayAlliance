@@ -38,6 +38,8 @@ class ForumFragment @Inject constructor() : BaseFragment(R.layout.fragment_forum
         recycler_view.adapter = adapter
 
         bindViewModel()
+
+        refresh()
     }
 
     override fun onDestroyView() {
