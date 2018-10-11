@@ -51,7 +51,6 @@ dependencies {
     kapt 'com.google.dagger:dagger-android-processor:2.16'
 
     implementation 'org.apache.commons:commons-text:1.5'
-    implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
     implementation 'com.blankj:utilcode:1.20.4'
 
     testImplementation 'junit:junit:4.12'

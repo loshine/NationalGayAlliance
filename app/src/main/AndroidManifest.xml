@@ -19,10 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.forum.ForumActivity" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/activity_login" />
+        <activity android:name=".ui.forum.ForumActivity" />
+        <activity android:name=".ui.topic.TopicActivity" />
     </application>
 
 </manifest>

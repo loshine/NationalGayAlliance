@@ -9,16 +9,15 @@ import xyz.loshine.nga.data.exception.ServerException
 import java.io.IOException
 import java.nio.charset.Charset
 
-internal class GsonResponseBodyConverter<T>(private val gson: Gson, private val adapter: TypeAdapter<T>) : Converter<ResponseBody, T> {
+internal class NgaResponseBodyConverter<T>(private val gson: Gson, private val adapter: TypeAdapter<T>) : Converter<ResponseBody, T> {
 
     @Throws(IOException::class)
     override fun convert(value: ResponseBody): T {
         // gbk 编码
         var string = String(value.bytes(), Charset.forName("gbk"))
-        // 处理掉不合 json 规范的字符
-        if (string.startsWith("{\"data\":{\"__MESSAGE\":{")) {
-            string = string.replace(Regex(",\"2\":\"[\\s\\S]*,\"3\":"), ",\"3\":")
-        }
+        // 直接制表符替换为 \t, \x 替换为 \\x
+        string = string.replace("\t", "\\t")
+                .replace("\\x", "\\\\x")
         val result = gson.fromJson(string, JsonObject::class.java)
         val messageElement = result.get("data").asJsonObject.get("__MESSAGE")
         if (messageElement != null) {

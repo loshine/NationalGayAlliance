@@ -5,6 +5,7 @@ import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.TextUtils
+import android.text.format.DateUtils
 import android.text.style.ForegroundColorSpan
 import android.text.style.ImageSpan
 import android.text.style.StyleSpan
@@ -15,11 +16,9 @@ import com.blankj.utilcode.util.ConvertUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import org.apache.commons.text.StringEscapeUtils
-import org.ocpsoft.prettytime.PrettyTime
 import xyz.loshine.nga.data.entity.Topic
 import xzy.loshine.nga.R
 import xzy.loshine.nga.text.RoundBackgroundColorSpan
-import java.util.*
 import javax.inject.Inject
 
 
@@ -44,8 +43,6 @@ class ForumPostAdapter @Inject constructor() :
         const val MASK_TYPE_ASSEMBLE = 32768        // 合集 2^15
     }
 
-    private val prettyTime = PrettyTime()
-
     private val colorRedSpan by lazy { ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.title_red)) }
     private val colorBlueSpan by lazy { ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.title_blue)) }
     private val colorGreenSpan by lazy { ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.title_green)) }
@@ -62,9 +59,15 @@ class ForumPostAdapter @Inject constructor() :
     private val colorAssembleSpan by lazy { RoundBackgroundColorSpan(ContextCompat.getColor(mContext, R.color.type_assemble), Color.WHITE, ConvertUtils.sp2px(12f).toFloat()) }
 
     override fun convert(helper: BaseViewHolder, item: Topic) {
+        val currentTimeMillis = System.currentTimeMillis()
+        val timeString = if (currentTimeMillis - item.lastPost * 1000 < 1000 * 60) {
+            mContext.getString(R.string.just_now)
+        } else {
+            DateUtils.getRelativeTimeSpanString(item.lastPost * 1000)
+        }
         helper.setText(R.id.author, item.author)
                 .setText(R.id.comment_count, "${item.replies}")
-                .setText(R.id.time, prettyTime.formatUnrounded(Date(item.lastPost * 1000)))
+                .setText(R.id.time, timeString)
                 .setGone(R.id.parent_name, item.parent != null)
                 .setText(R.id.parent_name, "[${item.parent?.name}]")
 

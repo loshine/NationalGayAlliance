@@ -5,6 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import xyz.loshine.nga.data.entity.AppApiResult
 import xyz.loshine.nga.data.entity.SiteApiResult
+import xyz.loshine.nga.data.entity.TopicDetailsData
 import xyz.loshine.nga.data.entity.TopicListData
 
 interface NgaApi {
@@ -13,10 +14,10 @@ interface NgaApi {
     fun getGroupList(): Flowable<AppApiResult<List<Any>>>
 
     @GET("thread.php?lite=js&noprefix")
-    fun getThreadList(@Query("fid") fid: Int,
-                      @Query("page") index: Int): Flowable<SiteApiResult<TopicListData>>
+    fun getTopicList(@Query("fid") fid: Int,
+                     @Query("page") index: Int): Flowable<SiteApiResult<TopicListData>>
 
     @GET("read.php?lite=js&noprefix&v2")
-    fun getThreadDetail(@Query("tid") tid: Int,
-                        @Query("page") index: Int): Flowable<SiteApiResult<Any>>
+    fun getTopicDetails(@Query("tid") tid: Int,
+                        @Query("page") index: Int): Flowable<SiteApiResult<TopicDetailsData>>
 }

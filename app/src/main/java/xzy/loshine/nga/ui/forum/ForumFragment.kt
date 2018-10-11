@@ -1,5 +1,6 @@
 package xzy.loshine.nga.ui.forum
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -11,6 +12,7 @@ import kotlinx.android.synthetic.main.fragment_forum.*
 import xzy.loshine.nga.R
 import xzy.loshine.nga.di.scopes.ActivityScoped
 import xzy.loshine.nga.ui.base.BaseFragment
+import xzy.loshine.nga.ui.topic.TopicActivity
 import javax.inject.Inject
 
 @ActivityScoped
@@ -46,13 +48,17 @@ class ForumFragment @Inject constructor() : BaseFragment(R.layout.fragment_forum
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         refresh_layout.setOnRefreshListener { refresh() }
+        adapter.setOnItemClickListener { _, _, position ->
+            startActivity(Intent(context, TopicActivity::class.java)
+                    .also { it.putExtra("tid", adapter.data[position].tid) })
+        }
         adapter.setOnLoadMoreListener({ loadMore() }, recycler_view)
         recycler_view.layoutManager = LinearLayoutManager(context)
         recycler_view.adapter = adapter
 
         bindViewModel()
 
-        refresh()
+        view.post { refresh() }
     }
 
     override fun onDestroyView() {

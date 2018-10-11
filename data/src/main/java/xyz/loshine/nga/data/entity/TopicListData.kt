@@ -10,7 +10,7 @@ data class TopicListData(
         @SerializedName("__ROWS")
         val rows: Int,
         @SerializedName("__T")
-        val topicList: Map<String, Map<String, Any>>,
+        val topicList: Map<String, Topic>,
         @SerializedName("__T__ROWS")
         val currentRows: Int, // 本页有多少条
         @SerializedName("__T__ROWS__PAGE")

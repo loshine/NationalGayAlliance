@@ -15,10 +15,12 @@ import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import xyz.loshine.nga.data.net.api.NgaApi
-import xyz.loshine.nga.data.net.converter.GsonErrorConverterFactory
+import xyz.loshine.nga.data.net.converter.NgaConverterFactory
 import xyz.loshine.nga.data.net.inteceptor.ReceivedCookiesInterceptor
 import xyz.loshine.nga.data.repository.forum.ForumDataRepository
 import xyz.loshine.nga.data.repository.forum.ForumRepository
+import xyz.loshine.nga.data.repository.topic.TopicDataRepository
+import xyz.loshine.nga.data.repository.topic.TopicRepository
 import xyz.loshine.nga.data.repository.user.UserDataRepository
 import xyz.loshine.nga.data.repository.user.UserRepository
 import java.io.File
@@ -55,9 +57,9 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun okHttpClient(cache: Cache, inteceptor: ReceivedCookiesInterceptor): OkHttpClient = OkHttpClient.Builder()
+    fun okHttpClient(cache: Cache, interceptor: ReceivedCookiesInterceptor): OkHttpClient = OkHttpClient.Builder()
             .cache(cache)
-            .addInterceptor(inteceptor)
+            .addInterceptor(interceptor)
             .addInterceptor(HttpLoggingInterceptor().also { it.level = HttpLoggingInterceptor.Level.BASIC })
             .connectTimeout(HTTP_CONNECT_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(HTTP_READ_TIMEOUT, TimeUnit.SECONDS)
@@ -70,7 +72,7 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun converterFactory(gson: Gson): Converter.Factory = GsonErrorConverterFactory.create(gson)
+    fun converterFactory(gson: Gson): Converter.Factory = NgaConverterFactory.create(gson)
 
     @Singleton
     @Provides
@@ -94,6 +96,10 @@ class DataModule {
     @Singleton
     @Provides
     fun forumRepository(forumDataRepository: ForumDataRepository): ForumRepository = forumDataRepository
+
+    @Singleton
+    @Provides
+    fun topicRepository(topicDataRepository: TopicDataRepository): TopicRepository = topicDataRepository
 
     @Singleton
     @Provides

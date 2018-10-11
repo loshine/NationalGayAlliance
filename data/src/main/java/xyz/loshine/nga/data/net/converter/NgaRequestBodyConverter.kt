@@ -11,7 +11,7 @@ import java.io.OutputStreamWriter
 import java.nio.charset.Charset
 
 
-internal class GsonRequestBodyConverter<T>(private val gson: Gson, private val adapter: TypeAdapter<T>) : Converter<T, RequestBody> {
+internal class NgaRequestBodyConverter<T>(private val gson: Gson, private val adapter: TypeAdapter<T>) : Converter<T, RequestBody> {
 
     @Throws(IOException::class)
     override fun convert(value: T): RequestBody {

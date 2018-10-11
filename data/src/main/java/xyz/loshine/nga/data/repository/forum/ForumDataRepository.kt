@@ -222,7 +222,7 @@ class ForumDataRepository @Inject constructor(private val ngaApi: NgaApi) : Foru
     }
 
     override fun getForumPostList(fid: Int, index: Int): Flowable<TopicListData> {
-        return ngaApi.getThreadList(fid, index)
+        return ngaApi.getTopicList(fid, index)
                 .map { it.data }
     }
 

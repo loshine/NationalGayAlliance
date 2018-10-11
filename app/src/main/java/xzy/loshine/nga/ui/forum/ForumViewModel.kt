@@ -69,7 +69,7 @@ class ForumViewModel
         return forumRepository.getForumPostList(forum.fid, pageIndex)
                 .subscribeOn(schedulerProvider.io())
                 .doOnNext { hasMoreSubject.onNext(it.topicList.isNotEmpty()) }
-                .map { listData -> listData.topicList.map { Topic(it.value) } }
+                .map { listData -> listData.topicList.map { it.value } }
                 .doOnComplete { pageIndex++ }
                 .doOnError { toast(it.message ?: "") }
     }

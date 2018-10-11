@@ -30,26 +30,5 @@ data class Topic(
         val lastModify: Long = 0,
         val parent: TopicParent? = null
 ) {
-    constructor(map: Map<String, Any>) : this(
-            map["fid"]?.toString()?.toDouble()?.toInt() ?: 0,
-            map["tpcurl"]?.toString() ?: "",
-            map["quote_from"]?.toString()?.toDouble()?.toInt() ?: 0,
-            map["author"]?.toString() ?: "",
-            map["subject"]?.toString() ?: "",
-            map["quote_to"]?.toString() ?: "",
-            map["icon"]?.toString()?.toDouble()?.toInt() ?: 0,
-            map["postdate"]?.toString()?.toDouble()?.toLong() ?: 0,
-            map["recommend"]?.toString()?.toDouble()?.toInt() ?: 0,
-            map["authorid"]?.toString()?.toDoubleOrNull()?.toInt() ?: 0,
-            map["type"]?.toString()?.toDouble()?.toInt() ?: 0,
-            map["tid"]?.toString()?.toDouble()?.toInt() ?: 0,
-            map["replies"]?.toString()?.toDouble()?.toInt() ?: 0,
-            map["lastposter"]?.toString() ?: "",
-            map["lastpost"]?.toString()?.toDouble()?.toLong() ?: 0,
-            map["topic_misc"]?.toString() ?: "",
-            map["lastmodify"]?.toString()?.toDouble()?.toLong() ?: 0,
-            (map["parent"] as Map<*, *>?)?.get("2")?.toString()?.let { TopicParent(it) }
-    )
-
-    data class TopicParent(val name: String)
+    data class TopicParent(@SerializedName("2") val name: String)
 }
