@@ -26,8 +26,7 @@ class ForumGroupFragment : EasyFragment(R.layout.fragment_forum_group) {
         val adapter = ForumGroupAdapter()
         adapter.setOnItemClickListener { _, _, position ->
             startActivity(Intent(context, ForumActivity::class.java)
-                    .also { it.putExtra("fid", adapter.data[position].fid) }
-                    .also { it.putExtra("name", adapter.data[position].name) })
+                    .also { it.putExtra("forum", adapter.data[position]) })
         }
         recycler_view.adapter = adapter
         recycler_view.layoutManager = GridLayoutManager(context, 3)

@@ -28,7 +28,7 @@ class ForumPostAdapter @Inject constructor() :
 
     companion object {
         // 颜色和格式，后 8 位
-        const val MASK_FONT_COLOR_RED = 1 //
+        const val MASK_FONT_COLOR_RED = 1
         const val MASK_FONT_COLOR_BLUE = 2
         const val MASK_FONT_COLOR_GREEN = 4
         const val MASK_FONT_COLOR_ORANGE = 8
@@ -105,12 +105,12 @@ class ForumPostAdapter @Inject constructor() :
             builder.setSpan(imageSpan, builder.length - 1, builder.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
         }
         if (item.type and MASK_TYPE_ASSEMBLE == MASK_TYPE_ASSEMBLE) {
-            val typeString = "合集"
+            val typeString = mContext.getString(R.string.topic_tag_assemble)
             builder.append(typeString)
             builder.setSpan(colorAssembleSpan, builder.length - typeString.length, builder.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
         if (item.type and MASK_TYPE_LOCK == MASK_TYPE_LOCK) {
-            val typeString = "锁定"
+            val typeString = mContext.getString(R.string.topic_tag_lock)
             builder.append(typeString)
             builder.setSpan(colorLockSpan, builder.length - typeString.length, builder.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }

@@ -12,7 +12,7 @@ import xzy.loshine.nga.R
 import xzy.loshine.nga.di.scopes.ActivityScoped
 import xzy.loshine.nga.ui.base.BaseFragment
 import xzy.loshine.nga.ui.forumgroup.ForumGroupFragment
-import xzy.loshine.nga.ui.mybookmarkgroup.MyBookmarkGroupFragment
+import xzy.loshine.nga.ui.mybookmarkforum.MyBookmarkForumFragment
 import javax.inject.Inject
 
 @ActivityScoped
@@ -21,7 +21,7 @@ class ForumGroupPagerFragment @Inject constructor() : BaseFragment(R.layout.frag
     @Inject
     lateinit var viewModel: ForumGroupPagerViewModel
     @Inject
-    lateinit var myBookmarkGroupFragment: MyBookmarkGroupFragment
+    lateinit var myBookmarkForumFragment: MyBookmarkForumFragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,7 +50,7 @@ class ForumGroupPagerFragment @Inject constructor() : BaseFragment(R.layout.frag
 
     private fun initCategories(categories: List<ForumGroup>) {
         val fragmentList = mutableListOf<Fragment>()
-        fragmentList.add(myBookmarkGroupFragment)
+        fragmentList.add(myBookmarkForumFragment)
         val titleList = mutableListOf<String>()
         titleList.add(getString(R.string.tab_my_bookmark))
         categories.forEach {

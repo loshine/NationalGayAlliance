@@ -3,6 +3,7 @@ package xzy.loshine.nga.ui.forum
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
+import xyz.loshine.nga.data.entity.Forum
 import xzy.loshine.nga.di.scopes.ActivityScoped
 import xzy.loshine.nga.di.scopes.FragmentScoped
 import javax.inject.Named
@@ -20,6 +21,6 @@ class ForumModule {
 
     @ActivityScoped
     @Provides
-    @Named("fid")
-    fun fid(activity: ForumActivity): Int = activity.intent.getIntExtra("fid", 0)
+    @Named("forum")
+    fun fid(activity: ForumActivity): Forum = activity.intent.getParcelableExtra("forum")
 }

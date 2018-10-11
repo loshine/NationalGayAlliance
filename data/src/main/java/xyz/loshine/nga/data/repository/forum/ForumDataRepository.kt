@@ -1,5 +1,8 @@
 package xyz.loshine.nga.data.repository.forum
 
+import io.paperdb.Paper
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import xyz.loshine.nga.data.entity.Forum
 import xyz.loshine.nga.data.entity.ForumGroup
@@ -11,6 +14,10 @@ import javax.inject.Singleton
 
 @Singleton
 class ForumDataRepository @Inject constructor(private val ngaApi: NgaApi) : ForumRepository {
+
+    companion object {
+        private const val KEY_FAVOURITE_FORUM = "favourite_forum"
+    }
 
     private val categoryList: MutableList<ForumGroup> = mutableListOf()
 
@@ -217,5 +224,47 @@ class ForumDataRepository @Inject constructor(private val ngaApi: NgaApi) : Foru
     override fun getForumPostList(fid: Int, index: Int): Flowable<TopicListData> {
         return ngaApi.getThreadList(fid, index)
                 .map { it.data }
+    }
+
+    override fun addFavourite(forum: Forum): Completable {
+        return Completable.create {
+            try {
+                val set = Paper.book().read<MutableSet<Forum>>(KEY_FAVOURITE_FORUM, mutableSetOf())
+                set.add(forum)
+                Paper.book().write(KEY_FAVOURITE_FORUM, set)
+                it.onComplete()
+            } catch (e: Exception) {
+                it.onError(e)
+            }
+        }
+    }
+
+    override fun removeFavourite(forum: Forum): Completable {
+        return Completable.create {
+            try {
+                val set = Paper.book().read<MutableSet<Forum>>(KEY_FAVOURITE_FORUM, mutableSetOf())
+                set.remove(forum)
+                Paper.book().write(KEY_FAVOURITE_FORUM, set)
+                it.onComplete()
+            } catch (e: Exception) {
+                it.onError(e)
+            }
+        }
+    }
+
+    override fun getAllFavourites(): Flowable<List<Forum>> {
+        return Flowable.create({
+            val set = Paper.book().read<MutableSet<Forum>>(KEY_FAVOURITE_FORUM, mutableSetOf())
+            it.onNext(set.toMutableList())
+            it.onComplete()
+        }, BackpressureStrategy.LATEST)
+    }
+
+    override fun isFavourite(forum: Forum): Flowable<Boolean> {
+        return Flowable.create({
+            val set = Paper.book().read<MutableSet<Forum>>(KEY_FAVOURITE_FORUM, mutableSetOf())
+            it.onNext(set.contains(forum))
+            it.onComplete()
+        }, BackpressureStrategy.LATEST)
     }
 }

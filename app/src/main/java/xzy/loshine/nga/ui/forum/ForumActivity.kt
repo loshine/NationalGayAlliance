@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.core.content.ContextCompat
 import dagger.Lazy
 import kotlinx.android.synthetic.main.activity_forum.*
+import xyz.loshine.nga.data.entity.Forum
 import xzy.loshine.nga.R
 import xzy.loshine.nga.ui.base.EasyActivity
 import javax.inject.Inject
@@ -17,7 +18,7 @@ class ForumActivity : EasyActivity(R.layout.activity_forum) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        toolbar.title = intent.getStringExtra("name")
+        toolbar.title = intent.getParcelableExtra<Forum>("forum").name
 
         setSupportActionBar(toolbar)
 

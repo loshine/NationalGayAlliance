@@ -7,4 +7,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="tab_my_bookmark">Bookmark</string>
+    <string name="topic_tag_assemble">Assemble</string>
+    <string name="topic_tag_lock">Lock</string>
+    <string name="activity_login">Login</string>
+    <string name="action_favourite">Favourite</string>
 </resources>
