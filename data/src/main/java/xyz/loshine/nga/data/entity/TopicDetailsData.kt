@@ -53,7 +53,7 @@ data class TopicDetailsData(
             val content: String = "",
             @SerializedName("lou") val index: Int = 0,
             @SerializedName("content_length") val contentLength: Int = 0,
-            @SerializedName("from_client") val fromClient: String = "",
+            @SerializedName("from_client") val fromClient: String? = null,
             @SerializedName("postdatetimestamp") val postDateTimestamp: Int = 0
     )
 }

@@ -35,7 +35,7 @@ class TopicFragment @Inject constructor() : BaseFragment(R.layout.fragment_topic
         view.post {
             viewModel.load()
                     .observeOn(schedulerProvider.ui())
-                    .subscribe({ data -> adapter.setNewData(data.rows.map { it.value }) }, { it.printStackTrace() })
+                    .subscribe({ adapter.setNewData(it) }, { it.printStackTrace() })
         }
     }
 

@@ -19,7 +19,8 @@ class TopicViewModel
     private var groupList: List<Pair<Int, String>>? = null
     private var userList: List<TopicUser>? = null
 
-    fun load(): Flowable<TopicDetailsData> {
+    @Suppress("UNCHECKED_CAST")
+    fun load(): Flowable<List<TopicRowUiModel>> {
         return topicRepository.getTopicList(tid, index)
                 .subscribeOn(schedulerProvider.io())
                 .doOnNext { data ->
@@ -32,5 +33,33 @@ class TopicViewModel
                     userList = data.userList.filter { it.key.toIntOrNull() != null }
                             .map { TopicUser(it.value) }
                 }
+                .map { data -> data.rows.map { convertUiModel(it.value) } }
     }
+
+    private fun convertUiModel(topicRow: TopicDetailsData.TopicRow): TopicRowUiModel {
+        val user = userList?.firstOrNull { topicRow.authorid == it.uid }
+        val group = groupList?.firstOrNull { user?.memberId == it.first }
+        val content = topicRow.content.replace("[b]", "<b>")
+                .replace("[/b]", "</b>")
+                .replace("[u]", "<u>")
+                .replace("[/u]", "</u>")
+                .replace("[i]", "<i>")
+                .replace("[/i]", "</i>")
+                .replace("[del]", "<del>")
+                .replace("[/del]", "</del>")
+        return TopicRowUiModel(
+                topicRow.pid,
+                topicRow.fid,
+                topicRow.tid,
+                topicRow.subject,
+                user?.avatar ?: "",
+                user?.username ?: "",
+                group?.second ?: "",
+                topicRow.postDate,
+                topicRow.index,
+                topicRow.fromClient ?: "",
+                content
+        )
+    }
+
 }
