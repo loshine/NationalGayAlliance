@@ -39,6 +39,7 @@ class TopicViewModel
     private fun convertUiModel(topicRow: TopicDetailsData.TopicRow): TopicRowUiModel {
         val user = userList?.firstOrNull { topicRow.authorid == it.uid }
         val group = groupList?.firstOrNull { user?.memberId == it.first }
+        // 替换可直接转换为 html 代码的格式
         val content = topicRow.content.replace("[b]", "<b>")
                 .replace("[/b]", "</b>")
                 .replace("[u]", "<u>")

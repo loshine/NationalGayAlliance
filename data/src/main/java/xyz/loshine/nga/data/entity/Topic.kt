@@ -15,8 +15,8 @@ data class Topic(
         @SerializedName("postdate")
         val postDate: Long = 0,
         val recommend: Int = 0,
-        @SerializedName("authorid")
-        val authorId: Int = 0,
+        @SerializedName("authorid") // 匿名时为 String，非匿名时为 Int
+        val authorId: Any = 0,
         val type: Int = 0,
         val tid: Int = 0,
         val replies: Int = 0,
@@ -31,4 +31,8 @@ data class Topic(
         val parent: TopicParent? = null
 ) {
     data class TopicParent(@SerializedName("2") val name: String)
+
+    fun isAnonymous():Boolean {
+        return authorId is String && authorId.startsWith("#anony_")
+    }
 }

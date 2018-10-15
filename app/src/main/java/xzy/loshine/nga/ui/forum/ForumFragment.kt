@@ -21,7 +21,7 @@ class ForumFragment @Inject constructor() : BaseFragment(R.layout.fragment_forum
     @Inject
     lateinit var viewModel: ForumViewModel
     @Inject
-    lateinit var adapter: ForumPostAdapter
+    lateinit var adapter: ForumTopicAdapter
 
     private var favouriteMenuItem: MenuItem? = null
 
