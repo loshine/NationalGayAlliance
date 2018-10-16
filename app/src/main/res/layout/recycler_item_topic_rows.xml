@@ -71,19 +71,16 @@
         app:layout_constraintEnd_toEndOf="@id/time"
         tools:text="#0" />
 
-    <TextView
+    <xzy.loshine.nga.widget.ContentWebView
         android:id="@+id/content"
-        style="@style/Base.TextAppearance.AppCompat.Body1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:lineSpacingMultiplier="1.2"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/group"
-        tools:text="测试文本测试文本测试文本测试文本测试文本测试文本测试文本测试文本测试文本测试文本测试文本" />
+        app:layout_constraintTop_toBottomOf="@id/group" />
 
     <View
         android:layout_width="0dp"

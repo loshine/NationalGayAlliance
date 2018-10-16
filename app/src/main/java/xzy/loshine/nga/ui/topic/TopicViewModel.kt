@@ -36,18 +36,24 @@ class TopicViewModel
                 .map { data -> data.rows.map { convertUiModel(it.value) } }
     }
 
+    private val replaceImgFunc: (MatchResult) -> CharSequence = {
+        if (it.groupValues[1].startsWith("http")) {
+            "<img src=\"${it.groupValues[1]}\" />"
+        } else {
+            "<img src=\"https://img.nga.178.com/attachments${it.groupValues[1]}\" />"
+        }
+    }
+
     private fun convertUiModel(topicRow: TopicDetailsData.TopicRow): TopicRowUiModel {
         val user = userList?.firstOrNull { topicRow.authorid == it.uid }
         val group = groupList?.firstOrNull { user?.memberId == it.first }
         // 替换可直接转换为 html 代码的格式
-        val content = topicRow.content.replace("[b]", "<b>")
-                .replace("[/b]", "</b>")
-                .replace("[u]", "<u>")
-                .replace("[/u]", "</u>")
-                .replace("[i]", "<i>")
-                .replace("[/i]", "</i>")
-                .replace("[del]", "<del>")
-                .replace("[/del]", "</del>")
+        val content = topicRow.content.replace("\\[img]\\.([\\s\\S]*?)\\[/img]".toRegex(), replaceImgFunc)
+                .replace("\\[color=([a-z]+?)]([\\s\\S]*?)\\[/color]".toRegex(), "<font color=\"$1\">$2</font>")
+                .replace("\\[([/]?(b|u|i|del|list))]".toRegex(), "<$1>")
+                .replace("[quote]", "<blockquote style=\"background:#f9efd6;margin:1em 0px 1em 0px;padding:1em;border:1px solid gray;\">")
+                .replace("[/quote]", "</blockquote>")
+                .replace("\\[\\*](.+?)<br/>".toRegex(), "<li>$1</li>")
         return TopicRowUiModel(
                 topicRow.pid,
                 topicRow.fid,

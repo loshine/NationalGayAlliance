@@ -22,7 +22,8 @@ class ExampleUnitTest {
     }
 
     @Test
-    fun format(){
-        println("-7.0".toIntOrNull())
+    fun format() {
+        println("[list][*]一级列表条目1[list][*]二级列表条目 [/list][*]条目2[list][*]二级列表条目[list][*]三级列表条目 [/list][/list][/list]"
+                .replace(Regex("\\[\\*](.+?)\\["), "<li>$1</li>["))
     }
 }
