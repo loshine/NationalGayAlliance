@@ -49,9 +49,11 @@ class TopicViewModel
         val group = groupList?.firstOrNull { user?.memberId == it.first }
         // 替换可直接转换为 html 代码的格式
         val content = topicRow.content.replace("\\[img]\\.([\\s\\S]*?)\\[/img]".toRegex(), replaceImgFunc)
+                .replace("===([\\s\\S]*?)===".toRegex(), "<h4>$1</h4>")
                 .replace("\\[color=([a-z]+?)]([\\s\\S]*?)\\[/color]".toRegex(), "<font color=\"$1\">$2</font>")
+                .replace("\\[align=([a-z]+?)]([\\s\\S]*?)\\[/align]".toRegex(), "<div style=\"text-align:\$1\">$2</div>")
                 .replace("\\[([/]?(b|u|i|del|list))]".toRegex(), "<$1>")
-                .replace("[quote]", "<blockquote style=\"background:#f9efd6;margin:1em 0px 1em 0px;padding:1em;border:1px solid gray;\">")
+                .replace("[quote]", "<blockquote>")
                 .replace("[/quote]", "</blockquote>")
                 .replace("\\[\\*](.+?)<br/>".toRegex(), "<li>$1</li>")
         return TopicRowUiModel(

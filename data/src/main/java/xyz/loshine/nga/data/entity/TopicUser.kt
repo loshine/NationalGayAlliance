@@ -26,25 +26,25 @@ data class TopicUser(
         @SerializedName("bit_data") val bitData: Int = 0
 ) {
     constructor(map: Map<String, Any>) : this(
-            map["uid"].toString().toDouble().toInt(),
+            map["uid"].toString().toDoubleOrNull()?.toInt() ?: 0,
             map["username"].toString(),
-            map["credit"].toString().toDouble().toInt(),
+            map["credit"].toString().toDoubleOrNull()?.toInt() ?: 0,
             map["medal"].toString(),
             map["reputation"].toString(),
-            map["groupid"].toString().toDouble().toInt(),
-            map["memberid"].toString().toDouble().toInt(),
+            map["groupid"].toString().toDoubleOrNull()?.toInt() ?: 0,
+            map["memberid"].toString().toDoubleOrNull()?.toInt() ?: 0,
             map["avatar"].toString(),
-            map["yz"].toString().toDouble().toInt(),
+            map["yz"].toString().toDoubleOrNull()?.toInt() ?: 0,
             map["site"].toString(),
             map["honor"].toString(),
-            map["regdate"].toString().toDouble().toInt(),
+            map["regdate"].toString().toDoubleOrNull()?.toInt() ?: 0,
             map["mute_time"].toString(),
-            map["postnum"].toString().toDouble().toInt(),
-            map["rvrc"].toString().toDouble().toInt(),
-            map["money"].toString().toDouble().toInt(),
-            map["thisvisit"].toString().toDouble().toInt(),
+            map["postnum"].toString().toDoubleOrNull()?.toInt() ?: 0,
+            map["rvrc"].toString().toDoubleOrNull()?.toInt() ?: 0,
+            map["money"].toString().toDoubleOrNull()?.toInt() ?: 0,
+            map["thisvisit"].toString().toDoubleOrNull()?.toInt() ?: 0,
             map["signature"].toString(),
             map["nickname"].toString(),
-            map["bit_data"].toString().toDouble().toInt()
+            map["bit_data"].toString().toDoubleOrNull()?.toInt() ?: 0
     )
 }

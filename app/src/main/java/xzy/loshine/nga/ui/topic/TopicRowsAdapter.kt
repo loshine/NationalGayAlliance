@@ -20,7 +20,8 @@ class TopicRowsAdapter
                 .setText(R.id.time, item.time)
                 .setText(R.id.index, "#${item.index}")
         val contentWebView = helper.getView<ContentWebView>(R.id.content)
-        contentWebView.loadData(item.content, "text/html", "utf-8")
+        contentWebView.loadDataWithBaseURL("file:///android_asset/", "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />" + item.content,
+                "text/html", "utf-8", null)
         val avatarView = helper.getView<ImageView>(R.id.avatar)
         GlideApp.with(avatarView)
                 .load(item.avatar)
