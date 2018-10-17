@@ -6,12 +6,14 @@ import xyz.loshine.nga.data.entity.TopicUser
 import xyz.loshine.nga.data.repository.topic.TopicRepository
 import xzy.loshine.nga.di.scopes.ActivityScoped
 import xzy.loshine.nga.ui.base.BaseViewModel
+import xzy.loshine.nga.utils.ContentParser
 import javax.inject.Inject
 import javax.inject.Named
 
 @ActivityScoped
 class TopicViewModel
 @Inject constructor(@Named("tid") private val tid: Int,
+                    private val contentParser: ContentParser,
                     private val topicRepository: TopicRepository) : BaseViewModel() {
 
     private var index = 1
@@ -36,26 +38,10 @@ class TopicViewModel
                 .map { data -> data.rows.map { convertUiModel(it.value) } }
     }
 
-    private val replaceImgFunc: (MatchResult) -> CharSequence = {
-        if (it.groupValues[1].startsWith("http")) {
-            "<img src=\"${it.groupValues[1]}\" />"
-        } else {
-            "<img src=\"https://img.nga.178.com/attachments${it.groupValues[1]}\" />"
-        }
-    }
 
     private fun convertUiModel(topicRow: TopicDetailsData.TopicRow): TopicRowUiModel {
         val user = userList?.firstOrNull { topicRow.authorid == it.uid }
         val group = groupList?.firstOrNull { user?.memberId == it.first }
-        // 替换可直接转换为 html 代码的格式
-        val content = topicRow.content.replace("\\[img]\\.([\\s\\S]*?)\\[/img]".toRegex(), replaceImgFunc)
-                .replace("===([\\s\\S]*?)===".toRegex(), "<h4>$1</h4>")
-                .replace("\\[color=([a-z]+?)]([\\s\\S]*?)\\[/color]".toRegex(), "<font color=\"$1\">$2</font>")
-                .replace("\\[align=([a-z]+?)]([\\s\\S]*?)\\[/align]".toRegex(), "<div style=\"text-align:\$1\">$2</div>")
-                .replace("\\[([/]?(b|u|i|del|list))]".toRegex(), "<$1>")
-                .replace("[quote]", "<blockquote>")
-                .replace("[/quote]", "</blockquote>")
-                .replace("\\[\\*](.+?)<br/>".toRegex(), "<li>$1</li>")
         return TopicRowUiModel(
                 topicRow.pid,
                 topicRow.fid,
@@ -67,7 +53,7 @@ class TopicViewModel
                 topicRow.postDate,
                 topicRow.index,
                 topicRow.fromClient ?: "",
-                content
+                contentParser.parse(topicRow.content)
         )
     }
 

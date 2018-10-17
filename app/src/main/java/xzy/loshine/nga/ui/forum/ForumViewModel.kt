@@ -107,7 +107,7 @@ class ForumViewModel
 
         if (!TextUtils.isEmpty(topic.topicMisc)) {
             val bytes = Base64.decode(topic.topicMisc, Base64.DEFAULT)
-            if (bytes != null && bytes.isNotEmpty()) {
+            if (bytes != null && bytes.isNotEmpty() && bytes[0].toInt() == 1) {
                 val lastBytes = bytes[bytes.lastIndex].toInt()
                 colorMask = when {
                     (lastBytes and MASK_FONT_COLOR_RED) == MASK_FONT_COLOR_RED -> MASK_FONT_COLOR_RED

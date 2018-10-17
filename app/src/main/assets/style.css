@@ -6,7 +6,7 @@ h4 {
   border-right:0px;
 }
 img {
-  width:100%;
+  max-width:100%;
 }
 blockquote {
   background:#f9efd6;
@@ -16,4 +16,15 @@ blockquote {
 }
 del {
   color:gray;
+}
+a {
+  max-width:100%;
+}
+table {
+  width: 99.9%;
+  border-collapse: collapse;
+}
+table td, table th {
+  border: 1px solid gray;
+  height: auto;
 }

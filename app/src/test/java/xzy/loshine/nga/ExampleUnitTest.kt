@@ -2,6 +2,7 @@ package xzy.loshine.nga
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import xzy.loshine.nga.utils.ContentParser
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -25,5 +26,10 @@ class ExampleUnitTest {
     fun format() {
         println("[list][*]一级列表条目1[list][*]二级列表条目 [/list][*]条目2[list][*]二级列表条目[list][*]三级列表条目 [/list][/list][/list]"
                 .replace(Regex("\\[\\*](.+?)\\["), "<li>$1</li>["))
+    }
+
+    @Test
+    fun parse() {
+        println(ContentParser().parse("[td30]点此链接[/td]"))
     }
 }
