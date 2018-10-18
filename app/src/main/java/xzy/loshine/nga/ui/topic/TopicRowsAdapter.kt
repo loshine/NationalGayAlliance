@@ -9,6 +9,7 @@ import xzy.loshine.nga.widget.ContentWebView
 import javax.inject.Inject
 
 
+
 class TopicRowsAdapter
 @Inject constructor() : BaseQuickAdapter<TopicRowUiModel, BaseViewHolder>(R.layout.recycler_item_topic_rows) {
 

@@ -1,30 +1,48 @@
+body {
+  margin:0px 0px 0px 0px;
+}
 h4 {
   margin:0px 0px 0px 0px;
-  border-bottom:1px solid gray;
+  border-bottom:1px solid #ccc;
+  border-top:0px;
+  border-left:0px;
+  border-right:0px;
+}
+h5 {
+  line-height:0;
+  font-size:0;
+  padding:0;
+  margin:0 0 3px 0;
+  height:0;
+  border-bottom:1px solid #ccc;
   border-top:0px;
   border-left:0px;
   border-right:0px;
 }
 img {
-  max-width:100%;
+  max-width:99.95%;
+  height:auto;
 }
 blockquote {
   background:#f9efd6;
   margin:1em 0px 1em 0px;
   padding:1em;
-  border:1px solid gray;
+  border:1px solid #ccc;
 }
 del {
   color:gray;
 }
 a {
-  max-width:100%;
+  max-width:99.95%;
 }
 table {
-  width: 99.9%;
+  width: 99.95%;
+  height: auto;
+  table-layout: fixed;
+  box-sizing: border-box;
   border-collapse: collapse;
 }
-table td, table th {
-  border: 1px solid gray;
-  height: auto;
+table td {
+  border: 1px solid #ccc;
+  overflow-wrap: break-word;
 }

@@ -39,11 +39,15 @@ class ContentParser @Inject constructor() {
                 .replace("\\[color=([a-z]+?)]([\\s\\S]*?)\\[/color]".toRegex(), "<font color=\"$1\">$2</font>") // 处理[color=xx]asd[/color]
                 .replace("\\[align=([a-z]+?)]([\\s\\S]*?)\\[/align]".toRegex(), "<div style=\"text-align:\$1\">$2</div>") // 处理[align=xx]asd[/align]
                 .replace("\\[([/]?(b|u|i|del|list|tr|td))]".toRegex(), "<$1>")    // 处理 b, u, i, del, list, tr, td
-                .replace("[table]", "<div><table cellspacing='0px' style='width:99.9%;'><tbody>")
+                .replace("[table]", "<div><table><tbody>")
                 .replace("[/table]", "</tbody></table></div>")
                 .replace("\\[td([\\d]{1,3})+]".toRegex(), "<td style=\"width:$1%;\">")    // 处理 [td20]
-                .replace("\\[td rowspan=([\\d]+?)]".toRegex(),"<td rowspan=\"$1\"")
-                .replace("\\[\\*](.+?)<br/>".toRegex(), "<li>$1</li>")  // 处理 [*]
+                .replace("\\[td rowspan=([\\d]+?)]".toRegex(), "<td rowspan=\"$1\"")
+                .replace("<([/]?(table|tbody|tr|td))><br/>".toRegex(), "<$1>") // 处理表格外面的额外空行
+                .replace("[-]{6,}".toRegex(), "<h5></h5>")
+                .replace("(?i)\\[\\*](.+?)<br/>".toRegex(), "<li>$1</li>")  // 处理 [*]
+                .replace("\\[size=(\\d+)%]".toRegex(), "<span style=\"font-size:$1%;line-height:$1%\">")
+                .replace("[/size]", "</span>")
                 .replace("[quote]", "<blockquote>") // 处理 [quote]
                 .replace("[/quote]", "</blockquote>")   // 处理 [/quote]
     }

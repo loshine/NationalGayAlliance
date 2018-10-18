@@ -30,6 +30,6 @@ class ExampleUnitTest {
 
     @Test
     fun parse() {
-        println(ContentParser().parse("[td30]点此链接[/td]"))
+        println(ContentParser().parse("<td><br/>[b]嘎嘎[/b]</td><br/>"))
     }
 }
