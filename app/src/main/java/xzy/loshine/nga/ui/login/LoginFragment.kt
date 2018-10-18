@@ -3,6 +3,7 @@ package xzy.loshine.nga.ui.login
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.webkit.*
 import android.widget.Toast
@@ -25,22 +26,27 @@ class LoginFragment @Inject constructor() : BaseFragment(R.layout.fragment_login
                 .subscribe { Toast.makeText(context, it, Toast.LENGTH_SHORT).show() })
     }
 
-    private val listener = { cookies: String ->
-        addDisposable(viewModel.saveCookies(cookies)
-                .observeOn(schedulerProvider.ui())
-                .subscribe({ activity?.finish() }, { it.printStackTrace() }))
-    }
-
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         web_view.webChromeClient = LoginWebChromeClient()
-                .also { it.setOnLoginSuccessListener(listener) }
         web_view.webViewClient = LoginWebViewClient()
         web_view.settings.javaScriptEnabled = true
         web_view.settings.javaScriptCanOpenWindowsAutomatically = true
-//        web_view.settings.userAgentString = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:63.0) Gecko/20100101 Firefox/63.0"
+        val callback = JsCallback()
+        callback.setOnLoginSuccessListener {
+            web_view.post {
+                // 操作需要发送回主线程
+                val cookieString = CookieManager.getInstance().getCookie(web_view.url)
+                if (!TextUtils.isEmpty(cookieString)) {
+                    addDisposable(viewModel.saveCookies(cookieString)
+                            .observeOn(schedulerProvider.ui())
+                            .subscribe({ activity?.finish() }, { it.printStackTrace() }))
+                }
+            }
+        }
+        web_view.addJavascriptInterface(callback, "ngaObj")
 //        web_view.loadUrl("https://bbs.nga.cn/nuke/p2.htm?login")
         web_view.loadUrl("https://bbs.nga.cn/nuke.php?__lib=login&__act=account&login")
         bindViewModel()
@@ -75,23 +81,30 @@ class LoginFragment @Inject constructor() : BaseFragment(R.layout.fragment_login
         }
     }
 
-    class LoginWebViewClient : WebViewClient()
+    class JsCallback {
 
-    class LoginWebChromeClient : WebChromeClient() {
-        override fun onJsAlert(view: WebView?, url: String?, message: String?, result: JsResult?): Boolean {
-            if (message?.contains("成功") == true) {
-                val cookieString = CookieManager.getInstance().getCookie(view?.url)
-                if (!TextUtils.isEmpty(cookieString)) {
-                    onLoginSuccessListener?.invoke(cookieString)
-                }
+        @JavascriptInterface
+        fun doAction(action: String, params: Any?) {
+            Log.d("doAction", "$action $params")
+            if (action == "loginSuccess") {
+                onLoginSuccessListener?.invoke()
             }
-            return super.onJsAlert(view, url, message, result)
         }
 
-        private var onLoginSuccessListener: ((String) -> Unit)? = null
+        private var onLoginSuccessListener: (() -> Unit)? = null
 
-        fun setOnLoginSuccessListener(listener: (String) -> Unit) {
+        fun setOnLoginSuccessListener(listener: () -> Unit) {
             this.onLoginSuccessListener = listener
         }
     }
+
+    class LoginWebViewClient : WebViewClient() {
+        override fun onPageFinished(view: WebView?, url: String?) {
+            super.onPageFinished(view, url)
+            // 强制客户端为Android
+            view?.loadUrl("javascript:window.parent.__API.get=function(name,params){window.ngaObj.doAction(name,params)};")
+        }
+    }
+
+    class LoginWebChromeClient : WebChromeClient()
 }
