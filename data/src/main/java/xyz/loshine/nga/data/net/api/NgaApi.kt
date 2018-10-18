@@ -2,6 +2,7 @@ package xyz.loshine.nga.data.net.api
 
 import io.reactivex.Flowable
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 import xyz.loshine.nga.data.entity.AppApiResult
 import xyz.loshine.nga.data.entity.SiteApiResult

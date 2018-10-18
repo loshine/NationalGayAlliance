@@ -38,6 +38,10 @@ class ContentParser @Inject constructor() {
                 .replace("===([\\s\\S]*?)===".toRegex(), "<h4>$1</h4>") // 处理 ===标题===
                 .replace("\\[color=([a-z]+?)]([\\s\\S]*?)\\[/color]".toRegex(), "<font color=\"$1\">$2</font>") // 处理[color=xx]asd[/color]
                 .replace("\\[align=([a-z]+?)]([\\s\\S]*?)\\[/align]".toRegex(), "<div style=\"text-align:\$1\">$2</div>") // 处理[align=xx]asd[/align]
+                .replace("\\[size=(\\d+)%]".toRegex(), "<span style=\"font-size:$1%;line-height:$1%\">")  // 处理 [size=?%]
+                .replace("[/size]", "</span>") // [/size]
+                .replace("\\[font=([^\\[|\\]]+)]".toRegex(), "<span style=\"font-family:$1\">") // 处理 [font=?]
+                .replace("[/font]", "</span>") // [/font]
                 .replace("\\[([/]?(b|u|i|del|list|tr|td))]".toRegex(), "<$1>")    // 处理 b, u, i, del, list, tr, td
                 .replace("[table]", "<div><table><tbody>")
                 .replace("[/table]", "</tbody></table></div>")
@@ -45,9 +49,7 @@ class ContentParser @Inject constructor() {
                 .replace("\\[td rowspan=([\\d]+?)]".toRegex(), "<td rowspan=\"$1\"")
                 .replace("<([/]?(table|tbody|tr|td))><br/>".toRegex(), "<$1>") // 处理表格外面的额外空行
                 .replace("[-]{6,}".toRegex(), "<h5></h5>")
-                .replace("(?i)\\[\\*](.+?)<br/>".toRegex(), "<li>$1</li>")  // 处理 [*]
-                .replace("\\[size=(\\d+)%]".toRegex(), "<span style=\"font-size:$1%;line-height:$1%\">")
-                .replace("[/size]", "</span>")
+                .replace("\\[\\*](.+?)<br/>".toRegex(), "<li>$1</li>")  // 处理 [*]
                 .replace("[quote]", "<blockquote>") // 处理 [quote]
                 .replace("[/quote]", "</blockquote>")   // 处理 [/quote]
     }

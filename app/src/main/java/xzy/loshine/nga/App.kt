@@ -1,6 +1,5 @@
 package xzy.loshine.nga
 
-import com.tencent.smtt.sdk.QbSdk
 import com.zzhoujay.richtext.RichText
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication

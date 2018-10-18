@@ -35,12 +35,12 @@ class LoginFragment @Inject constructor() : BaseFragment(R.layout.fragment_login
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // https://bbs.ngacn.cc/nuke.php?__lib=login&__act=account&login
         web_view.webChromeClient = LoginWebChromeClient()
                 .also { it.setOnLoginSuccessListener(listener) }
         web_view.webViewClient = LoginWebViewClient()
         web_view.settings.javaScriptEnabled = true
         web_view.settings.javaScriptCanOpenWindowsAutomatically = true
+//        web_view.settings.userAgentString = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:63.0) Gecko/20100101 Firefox/63.0"
 //        web_view.loadUrl("https://bbs.nga.cn/nuke/p2.htm?login")
         web_view.loadUrl("https://bbs.nga.cn/nuke.php?__lib=login&__act=account&login")
         bindViewModel()
