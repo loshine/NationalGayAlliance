@@ -15,5 +15,6 @@ class LoginViewModel
         return userRepository.saveLoginCookies(cookies)
                 .subscribeOn(schedulerProvider.io())
                 .doOnComplete { toast("登陆成功") }
+                .doOnError { toast("您还未登陆") }
     }
 }

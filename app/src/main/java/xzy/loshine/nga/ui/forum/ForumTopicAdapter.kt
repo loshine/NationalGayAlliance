@@ -56,17 +56,17 @@ class ForumTopicAdapter @Inject constructor() :
             MASK_FONT_COLOR_ORANGE -> colorOrangeSpan
             MASK_FONT_COLOR_SILVER -> colorSilverSpan
             else -> null
-        }?.let { builder.setSpan(it, 0, item.subject.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE) }
+        }?.let { builder.setSpan(it, 0, builder.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE) }
 
         when {
             item.bold && item.italic -> styleBoldItalicSpan
             item.italic -> styleItalicSpan
             item.bold -> styleBoldSpan
             else -> null
-        }?.let { builder.setSpan(it, 0, item.subject.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE) }
+        }?.let { builder.setSpan(it, 0, builder.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE) }
 
         if (item.underline) {
-            builder.setSpan(underlineSpan, 0, item.subject.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            builder.setSpan(underlineSpan, 0, builder.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
 
         if (item.hasAttachment) {

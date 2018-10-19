@@ -3,9 +3,13 @@ package xzy.loshine.nga.ui.login
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
-import android.webkit.*
+import android.webkit.CookieManager
+import android.webkit.WebChromeClient
+import android.webkit.WebViewClient
 import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_login.*
 import xzy.loshine.nga.R
@@ -26,6 +30,11 @@ class LoginFragment @Inject constructor() : BaseFragment(R.layout.fragment_login
                 .subscribe { Toast.makeText(context, it, Toast.LENGTH_SHORT).show() })
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,20 +43,7 @@ class LoginFragment @Inject constructor() : BaseFragment(R.layout.fragment_login
         web_view.webViewClient = LoginWebViewClient()
         web_view.settings.javaScriptEnabled = true
         web_view.settings.javaScriptCanOpenWindowsAutomatically = true
-        val callback = JsCallback()
-        callback.setOnLoginSuccessListener {
-            web_view.post {
-                // 操作需要发送回主线程
-                val cookieString = CookieManager.getInstance().getCookie(web_view.url)
-                if (!TextUtils.isEmpty(cookieString)) {
-                    addDisposable(viewModel.saveCookies(cookieString)
-                            .observeOn(schedulerProvider.ui())
-                            .subscribe({ activity?.finish() }, { it.printStackTrace() }))
-                }
-            }
-        }
-        web_view.addJavascriptInterface(callback, "ngaObj")
-//        web_view.loadUrl("https://bbs.nga.cn/nuke/p2.htm?login")
+
         web_view.loadUrl("https://bbs.nga.cn/nuke.php?__lib=login&__act=account&login")
         bindViewModel()
     }
@@ -55,6 +51,7 @@ class LoginFragment @Inject constructor() : BaseFragment(R.layout.fragment_login
     override fun onResume() {
         super.onResume()
         web_view.onResume()
+        Toast.makeText(context, "登陆成功后需要点击右上角按钮保存 cookies", Toast.LENGTH_LONG).show()
     }
 
     override fun onPause() {
@@ -81,30 +78,24 @@ class LoginFragment @Inject constructor() : BaseFragment(R.layout.fragment_login
         }
     }
 
-    class JsCallback {
-
-        @JavascriptInterface
-        fun doAction(action: String, params: Any?) {
-            Log.d("doAction", "$action $params")
-            if (action == "loginSuccess") {
-                onLoginSuccessListener?.invoke()
-            }
-        }
-
-        private var onLoginSuccessListener: (() -> Unit)? = null
-
-        fun setOnLoginSuccessListener(listener: () -> Unit) {
-            this.onLoginSuccessListener = listener
-        }
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.toolbar_login, menu)
     }
 
-    class LoginWebViewClient : WebViewClient() {
-        override fun onPageFinished(view: WebView?, url: String?) {
-            super.onPageFinished(view, url)
-            // 强制客户端为Android
-            view?.loadUrl("javascript:window.parent.__API.get=function(name,params){window.ngaObj.doAction(name,params)};")
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        val cookieString = CookieManager.getInstance().getCookie(web_view.url)
+        if (!TextUtils.isEmpty(cookieString)) {
+            addDisposable(viewModel.saveCookies(cookieString)
+                    .observeOn(schedulerProvider.ui())
+                    .subscribe({ activity?.finish() }, { it.printStackTrace() }))
+        } else {
+
         }
+        return true
     }
+
+    class LoginWebViewClient : WebViewClient()
 
     class LoginWebChromeClient : WebChromeClient()
 }

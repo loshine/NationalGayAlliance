@@ -11,5 +11,6 @@
     <string name="topic_tag_lock">锁定</string>
     <string name="activity_login">登陆</string>
     <string name="action_favourite">收藏</string>
+    <string name="action_set_cookies">Cookies</string>
     <string name="just_now">刚才</string>
 </resources>

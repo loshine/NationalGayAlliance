@@ -42,6 +42,9 @@ class ContentParser @Inject constructor() {
                 .replace("[/size]", "</span>") // [/size]
                 .replace("\\[font=([^\\[|\\]]+)]".toRegex(), "<span style=\"font-family:$1\">") // 处理 [font=?]
                 .replace("[/font]", "</span>") // [/font]
+                // TODO: 评论时需要处理一下
+                .replace("\\[b]Reply to \\[pid=(\\d+)?,(\\d+)?,(\\d+)?]Reply\\[/pid] Post by \\[uid=(\\d+)?]([\\s\\S]*?)\\[/uid] \\(([\\s\\S]*?)\\)\\[/b]".toRegex(),
+                        "<blockquote>Reply to [$1,$2,$3] Reply Post by uid=$4 username=$5 ($6)</blockquote>")
                 .replace("\\[([/]?(b|u|i|del|list|tr|td))]".toRegex(), "<$1>")    // 处理 b, u, i, del, list, tr, td
                 .replace("[table]", "<div><table><tbody>")
                 .replace("[/table]", "</tbody></table></div>")
