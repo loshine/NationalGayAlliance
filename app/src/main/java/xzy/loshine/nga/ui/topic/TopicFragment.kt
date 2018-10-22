@@ -22,6 +22,9 @@ class TopicFragment @Inject constructor() : BaseFragment(R.layout.fragment_topic
         addDisposable(viewModel.getMessage()
                 .observeOn(schedulerProvider.ui())
                 .subscribe { Toast.makeText(context, it, Toast.LENGTH_SHORT).show() })
+        addDisposable(viewModel.getHasMore()
+                .observeOn(schedulerProvider.ui())
+                .subscribe { adapter.setEnableLoadMore(it) })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -29,6 +32,7 @@ class TopicFragment @Inject constructor() : BaseFragment(R.layout.fragment_topic
 
         recycler_view.layoutManager = LinearLayoutManager(context)
         recycler_view.adapter = adapter
+        adapter.setOnLoadMoreListener({ loadMore() }, recycler_view)
 
         bindViewModel()
 
@@ -42,5 +46,14 @@ class TopicFragment @Inject constructor() : BaseFragment(R.layout.fragment_topic
     override fun onDestroyView() {
         super.onDestroyView()
         unBindViewModel()
+    }
+
+    private fun loadMore() {
+        addDisposable(viewModel.loadMore()
+                .observeOn(schedulerProvider.ui())
+                .subscribe({
+                    adapter.addData(it)
+                    adapter.loadMoreComplete()
+                }) { it.printStackTrace() })
     }
 }

@@ -12,7 +12,11 @@ data class TopicDetailsData(
         @SerializedName("__T")
         val topic: TopicDetail,
         @SerializedName("__R")
-        val rows: Map<String, TopicRow>
+        val rows: Map<String, TopicRow>,
+        @SerializedName("__R__ROWS")
+        val currentRows: Int,
+        @SerializedName("__R__ROWS_PAGE")
+        val pageSize: Int
 ) {
 
     data class TopicDetail(
