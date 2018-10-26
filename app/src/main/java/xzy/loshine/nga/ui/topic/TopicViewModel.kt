@@ -1,8 +1,6 @@
 package xzy.loshine.nga.ui.topic
 
-import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
-import io.reactivex.subjects.BehaviorSubject
 import xyz.loshine.nga.data.entity.TopicDetailsData
 import xyz.loshine.nga.data.entity.TopicUser
 import xyz.loshine.nga.data.repository.topic.TopicRepository
@@ -23,8 +21,6 @@ class TopicViewModel
     private val groupList: MutableList<Pair<Int, String>> = mutableListOf()
     private val userList: MutableList<TopicUser> = mutableListOf()
 
-    private val hasMoreSubject = BehaviorSubject.createDefault(false)
-
     @Suppress("UNCHECKED_CAST")
     fun load(): Flowable<List<TopicRowUiModel>> {
         index = 1
@@ -42,7 +38,6 @@ class TopicViewModel
                     data.userList.filter { it.key.toIntOrNull() != null }
                             .mapTo(userList) { TopicUser(it.value) }
                 }
-                .doOnNext { hasMoreSubject.onNext(it.rows.size == it.pageSize) }
                 .map { data -> data.rows.map { convertUiModel(it.value) } }
                 .doOnComplete { index++ }
     }
@@ -63,18 +58,12 @@ class TopicViewModel
                     data.userList.filter { it.key.toIntOrNull() != null }
                             .mapTo(userList) { TopicUser(it.value) }
                 }
-                .doOnNext { hasMoreSubject.onNext(it.rows.size == it.pageSize) }
                 .map { data -> data.rows.map { convertUiModel(it.value) } }
                 .doOnComplete { index++ }
     }
 
-    fun getHasMore(): Flowable<Boolean> {
-        return hasMoreSubject.toFlowable(BackpressureStrategy.LATEST)
-                .subscribeOn(schedulerProvider.computation())
-    }
-
     private fun convertUiModel(topicRow: TopicDetailsData.TopicRow): TopicRowUiModel {
-        val user = userList.firstOrNull { topicRow.authorid == it.uid }
+        val user = userList.firstOrNull { topicRow.authorId == it.uid }
         val group = groupList.firstOrNull { user?.memberId == it.first }
         return TopicRowUiModel(
                 topicRow.pid,

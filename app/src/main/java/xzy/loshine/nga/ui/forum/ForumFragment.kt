@@ -32,9 +32,6 @@ class ForumFragment @Inject constructor() : BaseFragment(R.layout.fragment_forum
         addDisposable(viewModel.getRefreshing()
                 .observeOn(schedulerProvider.ui())
                 .subscribe { refresh_layout.isRefreshing = it })
-        addDisposable(viewModel.getHasMore()
-                .observeOn(schedulerProvider.ui())
-                .subscribe { adapter.setEnableLoadMore(it) })
         addDisposable(viewModel.getFavouriteDrawable()
                 .observeOn(schedulerProvider.ui())
                 .subscribe { favouriteMenuItem?.setIcon(it) })
@@ -88,7 +85,13 @@ class ForumFragment @Inject constructor() : BaseFragment(R.layout.fragment_forum
     private fun refresh() {
         addDisposable(viewModel.refresh()
                 .observeOn(schedulerProvider.ui())
-                .subscribe({ adapter.setNewData(it) }, { it.printStackTrace() }))
+                .subscribe({
+                    adapter.setNewData(it)
+                    adapter.setEnableLoadMore(it.isNotEmpty())
+                }, {
+                    it.printStackTrace()
+                    adapter.setEnableLoadMore(false)
+                }))
         addDisposable(viewModel.isFavourite()
                 .observeOn(schedulerProvider.ui())
                 .subscribe({}, { it.printStackTrace() }))
@@ -100,7 +103,11 @@ class ForumFragment @Inject constructor() : BaseFragment(R.layout.fragment_forum
                 .subscribe({
                     adapter.addData(it)
                     adapter.loadMoreComplete()
-                }, { it.printStackTrace() }))
+                    adapter.setEnableLoadMore(it.isNotEmpty())
+                }, {
+                    it.printStackTrace()
+                    adapter.setEnableLoadMore(false)
+                }))
     }
 
 }

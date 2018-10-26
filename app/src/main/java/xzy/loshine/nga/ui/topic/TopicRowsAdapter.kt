@@ -9,7 +9,6 @@ import xzy.loshine.nga.widget.ContentWebView
 import javax.inject.Inject
 
 
-
 class TopicRowsAdapter
 @Inject constructor() : BaseQuickAdapter<TopicRowUiModel, BaseViewHolder>(R.layout.recycler_item_topic_rows) {
 
@@ -21,8 +20,9 @@ class TopicRowsAdapter
                 .setText(R.id.time, item.time)
                 .setText(R.id.index, "#${item.index}")
         val contentWebView = helper.getView<ContentWebView>(R.id.content)
-        contentWebView.loadDataWithBaseURL("file:///android_asset/", "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />" + item.content,
-                "text/html", "utf-8", null)
+        val html = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />${item.content}<script type=\"text/javascript\" src=\"file:///android_asset/collapse_script.js\"></script>"
+        contentWebView.loadDataWithBaseURL("file:///android_asset/", html,
+                "text/html", "utf-8", "")
         val avatarView = helper.getView<ImageView>(R.id.avatar)
         GlideApp.with(avatarView)
                 .load(item.avatar)

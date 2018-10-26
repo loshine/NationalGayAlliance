@@ -3,6 +3,7 @@ package xyz.loshine.nga.data.net.converter
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.TypeAdapter
+import com.orhanobut.logger.Logger
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import xyz.loshine.nga.data.exception.ServerException
@@ -20,6 +21,7 @@ internal class NgaResponseBodyConverter<T>(private val gson: Gson, private val a
                 .replace("\\x", "\\\\x")
         val result = gson.fromJson(string, JsonObject::class.java)
         val messageElement = result.get("data").asJsonObject.get("__MESSAGE")
+        Logger.d(string)
         if (messageElement != null) {
             // 如果发生错误，则抛出自定义错误
             throw ServerException(messageElement.asJsonObject.get("3").asInt, messageElement.asJsonObject.get("1").asString)

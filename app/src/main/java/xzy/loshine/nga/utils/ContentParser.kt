@@ -1,8 +1,11 @@
 package xzy.loshine.nga.utils
 
+import android.text.TextUtils
 import org.apache.commons.text.StringEscapeUtils
+import java.util.regex.Pattern
 import javax.inject.Inject
 import javax.inject.Singleton
+
 
 @Singleton
 class ContentParser @Inject constructor() {
@@ -31,7 +34,7 @@ class ContentParser @Inject constructor() {
             }
         }
 
-        return StringEscapeUtils.unescapeHtml4(content) // 处理 &#xxx; 此类编码字符
+        return StringEscapeUtils.unescapeHtml4(collapse(content)) // 处理 &#xxx; 此类编码字符
                 .replace("\\[img]([\\s\\S]*?)\\[/img]".toRegex(), replaceImgFunc) // 处理 [img]
                 .replace("\\[url]([\\s\\S]*?)\\[/url]".toRegex(), replaceUrlFunc)   // 处理 [url]asd[/url]
                 .replace("\\[url=([\\s\\S]*?)]([\\s\\S]*?)\\[/url]".toRegex(), replaceUrl2Func) // 处理[url=xxx]asd[/url]
@@ -42,18 +45,40 @@ class ContentParser @Inject constructor() {
                 .replace("[/size]", "</span>") // [/size]
                 .replace("\\[font=([^\\[|\\]]+)]".toRegex(), "<span style=\"font-family:$1\">") // 处理 [font=?]
                 .replace("[/font]", "</span>") // [/font]
-                // TODO: 评论时需要处理一下
+                // uid = $4
                 .replace("\\[b]Reply to \\[pid=(\\d+)?,(\\d+)?,(\\d+)?]Reply\\[/pid] Post by \\[uid=(\\d+)?]([\\s\\S]*?)\\[/uid] \\(([\\s\\S]*?)\\)\\[/b]".toRegex(),
-                        "<blockquote>Reply to [$1,$2,$3] Reply Post by uid=$4 username=$5 ($6)</blockquote>")
+                        "<blockquote><a href=\"https://bbs.nga.cn/read.php?searchpost=1&pid=$1\">Reply</a> by $5 ($6)</blockquote>")
                 .replace("\\[([/]?(b|u|i|del|list|tr|td))]".toRegex(), "<$1>")    // 处理 b, u, i, del, list, tr, td
                 .replace("[table]", "<div><table><tbody>")
                 .replace("[/table]", "</tbody></table></div>")
                 .replace("\\[td([\\d]{1,3})+]".toRegex(), "<td style=\"width:$1%;\">")    // 处理 [td20]
-                .replace("\\[td rowspan=([\\d]+?)]".toRegex(), "<td rowspan=\"$1\"")
+                .replace("\\[td (rowspan|colspan)=([\\d]+?)]".toRegex(), "<td $1=\"$2\"")
                 .replace("<([/]?(table|tbody|tr|td))><br/>".toRegex(), "<$1>") // 处理表格外面的额外空行
                 .replace("[-]{6,}".toRegex(), "<h5></h5>")
                 .replace("\\[\\*](.+?)<br/>".toRegex(), "<li>$1</li>")  // 处理 [*]
                 .replace("[quote]", "<blockquote>") // 处理 [quote]
                 .replace("[/quote]", "</blockquote>")   // 处理 [/quote]
+    }
+
+    private fun collapse(content: String): String {
+        var c = content
+        val pattern = Pattern.compile("\\[collapse(.*?)](.*?)\\[/collapse]")
+        var matcher = pattern.matcher(c)
+        var index = 0
+        while (matcher.find()) {
+            var title = matcher.group(1)
+            c = matcher.group(2)
+            c = String.format("<blockquote id=collapse%s style='border:1px solid #888;padding:5px;margin:5px 0px 0px 0px;display:none' >%s</blockquote>", index, c)
+            if (TextUtils.isEmpty(title)) {
+                c = String.format("<button id=collapseBtn%s onclick='toggleCollapse(%s)'>点击展开内容</button>%s", index, index, c)
+            } else {
+                title = title.substring(1)
+                c = String.format("<button id=collapseBtn%s onclick='toggleCollapse(%s,\"%s\")'>点击展开内容 : %s</button>%s", index, index, title, title, c)
+            }
+            c = matcher.replaceFirst(c)
+            matcher = pattern.matcher(c)
+            index++
+        }
+        return c
     }
 }

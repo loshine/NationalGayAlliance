@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.fragment_topic.*
 import xzy.loshine.nga.R
 import xzy.loshine.nga.di.scopes.ActivityScoped
@@ -22,9 +23,6 @@ class TopicFragment @Inject constructor() : BaseFragment(R.layout.fragment_topic
         addDisposable(viewModel.getMessage()
                 .observeOn(schedulerProvider.ui())
                 .subscribe { Toast.makeText(context, it, Toast.LENGTH_SHORT).show() })
-        addDisposable(viewModel.getHasMore()
-                .observeOn(schedulerProvider.ui())
-                .subscribe { adapter.setEnableLoadMore(it) })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,7 +37,10 @@ class TopicFragment @Inject constructor() : BaseFragment(R.layout.fragment_topic
         view.post {
             viewModel.load()
                     .observeOn(schedulerProvider.ui())
-                    .subscribe({ adapter.setNewData(it) }, { it.printStackTrace() })
+                    .subscribe({
+                        adapter.setNewData(it)
+                        adapter.setEnableLoadMore(it.size == 20)
+                    }, { Logger.e(it, "error") })
         }
     }
 
@@ -54,6 +55,7 @@ class TopicFragment @Inject constructor() : BaseFragment(R.layout.fragment_topic
                 .subscribe({
                     adapter.addData(it)
                     adapter.loadMoreComplete()
-                }) { it.printStackTrace() })
+                    adapter.setEnableLoadMore(it.size == 20)
+                }) { Logger.e(it, "error") })
     }
 }

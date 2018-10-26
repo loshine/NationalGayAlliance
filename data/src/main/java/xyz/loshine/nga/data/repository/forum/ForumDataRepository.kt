@@ -181,7 +181,9 @@ class ForumDataRepository @Inject constructor(private val ngaApi: NgaApi) : Foru
                     Forum(193, "帐号安全", categoryList.size),
                     Forum(334, "PC软硬件", categoryList.size),
                     Forum(201, "系统问题", categoryList.size),
-                    Forum(335, "网站开发", categoryList.size)
+                    Forum(335, "网站开发", categoryList.size),
+                    Forum(275, "测试版面", categoryList.size)
+
             )
             category = ForumGroup("系统软硬件讨论", categoryList.size, boardList)
             categoryList.add(category)

@@ -46,7 +46,7 @@ data class TopicDetailsData(
             val pid: Int = 0,
             val fid: Int = 0,
             val tid: Int = 0,
-            val authorid: Int = 0,
+            @SerializedName("authorid") val authorId: Int = 0,
             val type: Int = 0,
             val score: Int = 0,
             @SerializedName("score_2") val score2: Int = 0,
@@ -56,7 +56,7 @@ data class TopicDetailsData(
             @SerializedName("alterinfo") val alterInfo: String = "",
             val content: String = "",
             @SerializedName("lou") val index: Int = 0,
-            @SerializedName("content_length") val contentLength: Int = 0,
+//            @SerializedName("content_length") val contentLength: Int = 0,
             @SerializedName("from_client") val fromClient: String? = null,
             @SerializedName("postdatetimestamp") val postDateTimestamp: Int = 0
     )

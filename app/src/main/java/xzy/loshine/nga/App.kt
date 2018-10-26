@@ -1,6 +1,7 @@
 package xzy.loshine.nga
 
-import com.zzhoujay.richtext.RichText
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 import io.paperdb.Paper
@@ -18,6 +19,6 @@ class App : DaggerApplication() {
         super.onCreate()
 
         Paper.init(applicationContext)
-        RichText.initCacheDir(applicationContext)
+        Logger.addLogAdapter(AndroidLogAdapter())
     }
 }

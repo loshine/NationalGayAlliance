@@ -32,7 +32,6 @@ class ForumViewModel
     private var pageIndex = 1
 
     private val refreshingSubject = BehaviorSubject.createDefault(false)
-    private val hasMoreSubject = BehaviorSubject.createDefault(false)
     private val isFavouriteSubject = BehaviorSubject.createDefault(false)
 
     fun refresh(): Flowable<List<ForumTopicUiModel>> {
@@ -60,11 +59,6 @@ class ForumViewModel
         }
     }
 
-    fun getHasMore(): Flowable<Boolean> {
-        return hasMoreSubject.toFlowable(BackpressureStrategy.LATEST)
-                .subscribeOn(schedulerProvider.computation())
-    }
-
     fun getRefreshing(): Flowable<Boolean> {
         return refreshingSubject.toFlowable(BackpressureStrategy.LATEST)
                 .subscribeOn(schedulerProvider.computation())
@@ -79,7 +73,6 @@ class ForumViewModel
     private fun loadList(): Flowable<List<ForumTopicUiModel>> {
         return forumRepository.getForumPostList(forum.fid, pageIndex)
                 .subscribeOn(schedulerProvider.io())
-                .doOnNext { hasMoreSubject.onNext(it.topicList.isNotEmpty()) }
                 .map { listData -> listData.topicList.map { convertItemUiModel(it.value) } }
                 .doOnComplete { pageIndex++ }
                 .doOnError { toast(it.message ?: "") }
