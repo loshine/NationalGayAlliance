@@ -34,7 +34,7 @@ class ContentParser @Inject constructor() {
             }
         }
 
-        return StringEscapeUtils.unescapeHtml4(collapse(content)) // 处理 &#xxx; 此类编码字符
+        return collapse(StringEscapeUtils.unescapeHtml4(content)) // 处理 &#xxx; 此类编码字符
                 .replace("\\[img]([\\s\\S]*?)\\[/img]".toRegex(), replaceImgFunc) // 处理 [img]
                 .replace("\\[url]([\\s\\S]*?)\\[/url]".toRegex(), replaceUrlFunc)   // 处理 [url]asd[/url]
                 .replace("\\[url=([\\s\\S]*?)]([\\s\\S]*?)\\[/url]".toRegex(), replaceUrl2Func) // 处理[url=xxx]asd[/url]
@@ -60,6 +60,9 @@ class ContentParser @Inject constructor() {
                 .replace("[/quote]", "</blockquote>")   // 处理 [/quote]
     }
 
+    /**
+     * 处理点击展开此类标签
+     */
     private fun collapse(content: String): String {
         var c = content
         val pattern = Pattern.compile("\\[collapse(.*?)](.*?)\\[/collapse]")
@@ -68,7 +71,7 @@ class ContentParser @Inject constructor() {
         while (matcher.find()) {
             var title = matcher.group(1)
             c = matcher.group(2)
-            c = String.format("<blockquote id=collapse%s style='border:1px solid #888;padding:5px;margin:5px 0px 0px 0px;display:none' >%s</blockquote>", index, c)
+            c = String.format("<blockquote id=collapse%s style='display:none' >%s</blockquote>", index, c)
             if (TextUtils.isEmpty(title)) {
                 c = String.format("<button id=collapseBtn%s onclick='toggleCollapse(%s)'>点击展开内容</button>%s", index, index, c)
             } else {

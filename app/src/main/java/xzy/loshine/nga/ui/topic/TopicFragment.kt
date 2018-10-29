@@ -30,6 +30,7 @@ class TopicFragment @Inject constructor() : BaseFragment(R.layout.fragment_topic
 
         recycler_view.layoutManager = LinearLayoutManager(context)
         recycler_view.adapter = adapter
+
         adapter.setOnLoadMoreListener({ loadMore() }, recycler_view)
 
         bindViewModel()

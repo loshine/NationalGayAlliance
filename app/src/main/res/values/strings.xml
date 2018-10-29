@@ -12,5 +12,11 @@
     <string name="activity_login">Login</string>
     <string name="action_favourite">Favourite</string>
     <string name="action_set_cookies">Cookies</string>
+    <string name="action_page_first">First</string>
+    <string name="action_page_last">Last</string>
+    <string name="action_page_previous">Previous</string>
+    <string name="action_page_next">Next</string>
+    <string name="action_comment">Comment</string>
     <string name="just_now">just now</string>
+
 </resources>
