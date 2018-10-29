@@ -16,10 +16,6 @@ class ContentWebView(context: Context, attrs: AttributeSet?) : WebView(context, 
         this.listener = listener
     }
 
-    fun removeListener() {
-        this.listener = null
-    }
-
     constructor(context: Context) : this(context, null)
 
     init {
