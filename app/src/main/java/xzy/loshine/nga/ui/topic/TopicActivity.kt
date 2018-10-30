@@ -28,9 +28,9 @@ class TopicActivity : EasyActivity(R.layout.activity_topic) {
         }
 
         app_bar_layout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, offset ->
-            if (offset < 0) {
+            if (-offset == app_bar_layout.totalScrollRange) {
                 fab.hide()
-            } else {
+            } else if (offset == 0) {
                 fab.show()
             }
         })
