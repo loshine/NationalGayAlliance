@@ -56,6 +56,7 @@ class TopicFragment @Inject constructor() : BaseFragment(R.layout.fragment_topic
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        recycler_view.setItemViewCacheSize(20)
         recycler_view.layoutManager = LinearLayoutManager(context)
         recycler_view.adapter = adapter
 
