@@ -47,6 +47,7 @@ class ContentWebView(context: Context, attrs: AttributeSet?) : WebView(context, 
 
         var listener: ((Float) -> Unit)? = null
 
+        @Suppress("unused")
         @JavascriptInterface
         fun resize(height: Float) {
             val webViewHeight = height * resources.displayMetrics.density

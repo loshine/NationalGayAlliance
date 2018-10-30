@@ -14,6 +14,7 @@
     <string name="action_set_cookies">Cookies</string>
     <string name="action_page_first">First</string>
     <string name="action_page_last">Last</string>
+    <string name="action_page_last_expr">Last(%1$d)</string>
     <string name="action_page_previous">Previous</string>
     <string name="action_page_next">Next</string>
     <string name="action_comment">Comment</string>

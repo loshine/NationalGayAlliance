@@ -1,6 +1,8 @@
 package xzy.loshine.nga.ui.topic
 
+import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
+import io.reactivex.subjects.BehaviorSubject
 import xyz.loshine.nga.data.entity.TopicDetailsData
 import xyz.loshine.nga.data.entity.TopicUser
 import xyz.loshine.nga.data.repository.topic.TopicRepository
@@ -21,29 +23,46 @@ class TopicViewModel
     private val groupList: MutableList<Pair<Int, String>> = mutableListOf()
     private val userList: MutableList<TopicUser> = mutableListOf()
 
-    @Suppress("UNCHECKED_CAST")
-    fun load(): Flowable<List<TopicRowUiModel>> {
+    private val firstAndPreMenuItemVisible = BehaviorSubject.createDefault(false)
+    private val lastAndNextMenuItemVisible = BehaviorSubject.createDefault(false)
+    private val thisTimeLastPageSubject = BehaviorSubject.createDefault(1)
+
+    fun loadFirst(): Flowable<List<TopicRowUiModel>> {
         index = 1
-        return topicRepository.getTopicList(tid, index)
-                .subscribeOn(schedulerProvider.io())
-                .doOnSubscribe {
-                    groupList.clear()
-                    userList.clear()
-                }
-                .doOnNext { data ->
-                    val groupMap = data.userList["__GROUPS"] as Map<String, Map<String, Any>>?
-                    groupMap?.mapTo(groupList) { Pair(it.value["2"].toString().toDouble().toInt(), it.value["0"].toString()) }
-                }
-                .doOnNext { data ->
-                    data.userList.filter { it.key.toIntOrNull() != null }
-                            .mapTo(userList) { TopicUser(it.value) }
-                }
-                .map { data -> data.rows.map { convertUiModel(it.value) } }
-                .doOnComplete { index++ }
+        return loadByPage()
+    }
+
+    fun loadPrevious(): Flowable<List<TopicRowUiModel>> {
+        index -= 2
+        return loadByPage()
+    }
+
+    fun loadNext(): Flowable<List<TopicRowUiModel>> {
+        return loadByPage()
+    }
+
+    fun loadLast(): Flowable<List<TopicRowUiModel>> {
+        index = thisTimeLastPageSubject.value ?: 1
+        return loadByPage()
+    }
+
+    fun getFirstAndPreMenuItemVisible(): Flowable<Boolean> {
+        return firstAndPreMenuItemVisible.toFlowable(BackpressureStrategy.LATEST)
+                .subscribeOn(schedulerProvider.computation())
+    }
+
+    fun getLastAndNextMenuItemVisible(): Flowable<Boolean> {
+        return lastAndNextMenuItemVisible.toFlowable(BackpressureStrategy.LATEST)
+                .subscribeOn(schedulerProvider.computation())
+    }
+
+    fun getThisTimeLastPage(): Flowable<Int> {
+        return thisTimeLastPageSubject.toFlowable(BackpressureStrategy.LATEST)
+                .subscribeOn(schedulerProvider.computation())
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun loadMore(): Flowable<List<TopicRowUiModel>> {
+    private fun loadByPage(): Flowable<List<TopicRowUiModel>> {
         return topicRepository.getTopicList(tid, index)
                 .subscribeOn(schedulerProvider.io())
                 .doOnSubscribe {
@@ -57,6 +76,12 @@ class TopicViewModel
                 .doOnNext { data ->
                     data.userList.filter { it.key.toIntOrNull() != null }
                             .mapTo(userList) { TopicUser(it.value) }
+                }
+                .doOnNext {
+                    val thisTimeLastPage = it.topic.thisVisitRows / it.pageSize + 1
+                    thisTimeLastPageSubject.onNext(thisTimeLastPage)
+                    firstAndPreMenuItemVisible.onNext(index > 1)
+                    lastAndNextMenuItemVisible.onNext(thisTimeLastPage != index)
                 }
                 .map { data -> data.rows.map { convertUiModel(it.value) } }
                 .doOnComplete { index++ }

@@ -13,10 +13,10 @@ data class TopicDetailsData(
         val topic: TopicDetail,
         @SerializedName("__R")
         val rows: Map<String, TopicRow>,
-        @SerializedName("__R__ROWS")
-        val currentRows: Int,
         @SerializedName("__R__ROWS_PAGE")
-        val pageSize: Int
+        val pageSize: Int,
+        @SerializedName("__ROWS")
+        val rowsSize: Int
 ) {
 
     data class TopicDetail(
@@ -39,7 +39,8 @@ data class TopicDetailsData(
             @SerializedName("lastposter") val lastPoster: String = "",
             @SerializedName("lastpost") val lastPost: Long = 0,
             @SerializedName("topic_misc") val topicMisc: String = "",
-            @SerializedName("lastmodify") val lastModify: Long = 0
+            @SerializedName("lastmodify") val lastModify: Long = 0,
+            @SerializedName("this_visit_rows") val thisVisitRows: Int = 0
     )
 
     data class TopicRow(

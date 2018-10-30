@@ -1,8 +1,9 @@
 package xzy.loshine.nga.ui.topic
 
-import android.graphics.PorterDuff
+import android.animation.ObjectAnimator
+import android.animation.StateListAnimator
 import android.os.Bundle
-import androidx.core.content.ContextCompat
+import com.google.android.material.appbar.AppBarLayout
 import dagger.Lazy
 import kotlinx.android.synthetic.main.activity_topic.*
 import xzy.loshine.nga.R
@@ -18,11 +19,26 @@ class TopicActivity : EasyActivity(R.layout.activity_topic) {
         super.onCreate(savedInstanceState)
 
         toolbar.title = ""
-        setSupportActionBar(toolbar)
-
-        toolbar.navigationIcon?.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
         toolbar.setNavigationOnClickListener { onBackPressed() }
 
+        setSupportActionBar(bottom_app_bar)
+        bottom_app_bar.setNavigationOnClickListener {
+            val fragment = supportFragmentManager.findFragmentById(R.id.container) as TopicFragment?
+            fragment?.scrollToTop()
+        }
+
+        app_bar_layout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, offset ->
+            if (offset < 0) {
+                fab.hide()
+            } else {
+                fab.show()
+            }
+        })
+
+        title_text_view.text = intent.getStringExtra("subject")
+        val stateListAnimator = StateListAnimator()
+        stateListAnimator.addState(IntArray(0), ObjectAnimator.ofFloat(app_bar_layout, "elevation", 0f))
+        app_bar_layout.stateListAnimator = stateListAnimator
         if (supportFragmentManager.findFragmentById(R.id.container) == null) {
             supportFragmentManager.beginTransaction()
                     .add(R.id.container, fragmentProvider.get())

@@ -47,7 +47,8 @@ class ForumFragment @Inject constructor() : BaseFragment(R.layout.fragment_forum
         refresh_layout.setOnRefreshListener { refresh() }
         adapter.setOnItemClickListener { _, _, position ->
             startActivity(Intent(context, TopicActivity::class.java)
-                    .also { it.putExtra("tid", adapter.data[position].tid) })
+                    .also { it.putExtra("tid", adapter.data[position].tid) }
+                    .also { it.putExtra("subject", adapter.data[position].subject) })
         }
         adapter.setOnLoadMoreListener({ loadMore() }, recycler_view)
         recycler_view.layoutManager = LinearLayoutManager(context)

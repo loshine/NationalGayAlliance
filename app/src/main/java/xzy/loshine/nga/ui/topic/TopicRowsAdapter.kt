@@ -1,6 +1,5 @@
 package xzy.loshine.nga.ui.topic
 
-import android.util.Log
 import android.util.LruCache
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.ImageView
@@ -22,9 +21,7 @@ class TopicRowsAdapter
     private val heightCache = LruCache<Int, Float>(60)
 
     override fun convert(helper: BaseViewHolder, item: TopicRowUiModel) {
-        helper.setGone(R.id.subject, item.index == 0)
-                .setText(R.id.subject, item.subject)
-                .setText(R.id.author, item.authorName)
+        helper.setText(R.id.author, item.authorName)
                 .setText(R.id.group, item.groupName)
                 .setText(R.id.time, item.time)
                 .setText(R.id.index, "#${item.index}")

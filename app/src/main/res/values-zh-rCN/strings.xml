@@ -14,6 +14,7 @@
     <string name="action_set_cookies">Cookies</string>
     <string name="action_page_first">第一页</string>
     <string name="action_page_last">最末页</string>
+    <string name="action_page_last_expr">最末(%1$d)页</string>
     <string name="action_page_previous">上一页</string>
     <string name="action_page_next">下一页</string>
     <string name="action_comment">评论</string>

@@ -1,6 +1,9 @@
 package xzy.loshine.nga.ui.topic
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,10 +22,35 @@ class TopicFragment @Inject constructor() : BaseFragment(R.layout.fragment_topic
     @Inject
     lateinit var adapter: TopicRowsAdapter
 
+    private var firstMenuItem: MenuItem? = null
+    private var preMenuItem: MenuItem? = null
+    private var nextMenuItem: MenuItem? = null
+    private var lastMenuItem: MenuItem? = null
+
     override fun bindViewModel() {
         addDisposable(viewModel.getMessage()
                 .observeOn(schedulerProvider.ui())
                 .subscribe { Toast.makeText(context, it, Toast.LENGTH_SHORT).show() })
+        addDisposable(viewModel.getFirstAndPreMenuItemVisible()
+                .observeOn(schedulerProvider.ui())
+                .subscribe {
+                    firstMenuItem?.isVisible = it
+                    preMenuItem?.isVisible = it
+                })
+        addDisposable(viewModel.getLastAndNextMenuItemVisible()
+                .observeOn(schedulerProvider.ui())
+                .subscribe {
+                    nextMenuItem?.isVisible = it
+                    lastMenuItem?.isVisible = it
+                })
+        addDisposable(viewModel.getThisTimeLastPage()
+                .observeOn(schedulerProvider.ui())
+                .subscribe { lastMenuItem?.title = getString(R.string.action_page_last_expr, it) })
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -31,18 +59,9 @@ class TopicFragment @Inject constructor() : BaseFragment(R.layout.fragment_topic
         recycler_view.layoutManager = LinearLayoutManager(context)
         recycler_view.adapter = adapter
 
-        adapter.setOnLoadMoreListener({ loadMore() }, recycler_view)
-
         bindViewModel()
 
-        view.post {
-            viewModel.load()
-                    .observeOn(schedulerProvider.ui())
-                    .subscribe({
-                        adapter.setNewData(it)
-                        adapter.setEnableLoadMore(it.size == 20)
-                    }, { Logger.e(it, "error") })
-        }
+        loadFirst()
     }
 
     override fun onDestroyView() {
@@ -50,13 +69,50 @@ class TopicFragment @Inject constructor() : BaseFragment(R.layout.fragment_topic
         unBindViewModel()
     }
 
-    private fun loadMore() {
-        addDisposable(viewModel.loadMore()
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.bottom_app_bar_topic, menu)
+        firstMenuItem = menu.findItem(R.id.action_first)
+        preMenuItem = menu.findItem(R.id.action_previous)
+        nextMenuItem = menu.findItem(R.id.action_next)
+        lastMenuItem = menu.findItem(R.id.action_last)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.action_first -> loadFirst()
+            R.id.action_previous -> loadPrevious()
+            R.id.action_next -> loadNext()
+            R.id.action_last -> loadLast()
+        }
+        return true
+    }
+
+    fun scrollToTop() {
+        recycler_view.scrollToPosition(0)
+    }
+
+    private fun loadFirst() {
+        addDisposable(viewModel.loadFirst()
                 .observeOn(schedulerProvider.ui())
-                .subscribe({
-                    adapter.addData(it)
-                    adapter.loadMoreComplete()
-                    adapter.setEnableLoadMore(it.size == 20)
-                }) { Logger.e(it, "error") })
+                .subscribe({ adapter.setNewData(it) }, { Logger.e(it, "error") }))
+    }
+
+    private fun loadPrevious() {
+        addDisposable(viewModel.loadPrevious()
+                .observeOn(schedulerProvider.ui())
+                .subscribe({ adapter.setNewData(it) }, { Logger.e(it, "error") }))
+    }
+
+    private fun loadNext() {
+        addDisposable(viewModel.loadNext()
+                .observeOn(schedulerProvider.ui())
+                .subscribe({ adapter.setNewData(it) }, { Logger.e(it, "error") }))
+    }
+
+    private fun loadLast() {
+        addDisposable(viewModel.loadLast()
+                .observeOn(schedulerProvider.ui())
+                .subscribe({ adapter.setNewData(it) }, { Logger.e(it, "error") }))
     }
 }
