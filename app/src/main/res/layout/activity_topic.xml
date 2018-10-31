@@ -54,7 +54,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         app:fabAlignmentMode="end"
-        app:fabCradleMargin="62dp"
         app:hideOnScroll="true"
         app:navigationIcon="@drawable/chevron_up"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"

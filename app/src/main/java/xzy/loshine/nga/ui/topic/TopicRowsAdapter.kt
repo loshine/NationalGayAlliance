@@ -4,13 +4,14 @@ import android.widget.ImageView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import xzy.loshine.nga.R
+import xzy.loshine.nga.utils.ContentParser
 import xzy.loshine.nga.utils.image.GlideApp
 import xzy.loshine.nga.widget.ContentWebView
 import javax.inject.Inject
 
 
 class TopicRowsAdapter
-@Inject constructor() : BaseQuickAdapter<TopicRowUiModel, BaseViewHolder>(R.layout.recycler_item_topic_rows) {
+@Inject constructor(private val parser: ContentParser) : BaseQuickAdapter<TopicRowUiModel, BaseViewHolder>(R.layout.recycler_item_topic_rows) {
 
     init {
         setHasStableIds(true)
@@ -22,8 +23,9 @@ class TopicRowsAdapter
                 .setText(R.id.time, item.time)
                 .setText(R.id.index, "#${item.index}")
         val contentWebView = helper.getView<ContentWebView>(R.id.content)
-        contentWebView.setLocalMode()
         val html = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />${item.content}<script type=\"text/javascript\" src=\"file:///android_asset/collapse_script.js\"></script>"
+        val list = parser.getImageListByHtml(item.content)
+        contentWebView.setImageList(list)
         contentWebView.loadDataWithBaseURL("file:///android_asset/", html,
                 "text/html", "utf-8", null)
         helper.getView<ImageView>(R.id.avatar).let {

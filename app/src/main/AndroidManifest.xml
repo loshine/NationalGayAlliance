@@ -28,6 +28,7 @@
             android:label="@string/activity_login" />
         <activity android:name=".ui.forum.ForumActivity" />
         <activity android:name=".ui.topic.TopicActivity" />
+        <activity android:name=".ui.image.ImagePreviewActivity" />
     </application>
 
 </manifest>

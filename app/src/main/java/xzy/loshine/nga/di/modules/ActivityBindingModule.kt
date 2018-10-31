@@ -7,6 +7,8 @@ import xzy.loshine.nga.ui.MainActivity
 import xzy.loshine.nga.ui.forum.ForumActivity
 import xzy.loshine.nga.ui.forum.ForumModule
 import xzy.loshine.nga.ui.forumgrouppager.ForumGroupPagerModule
+import xzy.loshine.nga.ui.image.ImagePreviewActivity
+import xzy.loshine.nga.ui.image.ImagePreviewModule
 import xzy.loshine.nga.ui.login.LoginActivity
 import xzy.loshine.nga.ui.login.LoginModule
 import xzy.loshine.nga.ui.topic.TopicActivity
@@ -30,4 +32,8 @@ interface ActivityBindingModule {
     @ActivityScoped
     @ContributesAndroidInjector(modules = [TopicModule::class])
     fun topicActivity(): TopicActivity
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = [ImagePreviewModule::class])
+    fun imagePreviewActivity(): ImagePreviewActivity
 }

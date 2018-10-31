@@ -61,6 +61,16 @@ class ContentParser @Inject constructor() {
                 .replace("[/quote]", "</blockquote>")   // 处理 [/quote]
     }
 
+    fun getImageListByHtml(html: String): List<String> {
+        val pattern = Pattern.compile("<img src='([\\s\\S]*?)' >")
+        val matcher = pattern.matcher(html)
+        val list = mutableListOf<String>()
+        while (matcher.find()) {
+            list.add(matcher.group(1))
+        }
+        return list
+    }
+
     /**
      * 处理点击展开此类标签
      */
