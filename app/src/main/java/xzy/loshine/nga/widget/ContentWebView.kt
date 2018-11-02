@@ -29,7 +29,9 @@ class ContentWebView(context: Context, attrs: AttributeSet?) : WebView(context, 
                     context.startActivity(intent)
                     return true
                 }
-                return super.shouldOverrideUrlLoading(view, request)
+                // 调用系统浏览器打开
+                context.startActivity(Intent(Intent.ACTION_VIEW, request.url))
+                return true
             }
         }
         val settings = settings
