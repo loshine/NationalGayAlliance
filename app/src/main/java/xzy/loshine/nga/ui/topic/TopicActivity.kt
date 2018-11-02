@@ -2,12 +2,14 @@ package xzy.loshine.nga.ui.topic
 
 import android.animation.ObjectAnimator
 import android.animation.StateListAnimator
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.appbar.AppBarLayout
 import dagger.Lazy
 import kotlinx.android.synthetic.main.activity_topic.*
 import xzy.loshine.nga.R
 import xzy.loshine.nga.ui.base.EasyActivity
+import xzy.loshine.nga.ui.reply.ReplyActivity
 import javax.inject.Inject
 
 class TopicActivity : EasyActivity(R.layout.activity_topic) {
@@ -43,6 +45,10 @@ class TopicActivity : EasyActivity(R.layout.activity_topic) {
             supportFragmentManager.beginTransaction()
                     .add(R.id.container, fragmentProvider.get())
                     .commit()
+        }
+
+        fab.setOnClickListener {
+            startActivity(Intent(this, ReplyActivity::class.java))
         }
     }
 }

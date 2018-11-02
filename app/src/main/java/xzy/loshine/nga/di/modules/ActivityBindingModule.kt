@@ -11,6 +11,8 @@ import xzy.loshine.nga.ui.image.ImagePreviewActivity
 import xzy.loshine.nga.ui.image.ImagePreviewModule
 import xzy.loshine.nga.ui.login.LoginActivity
 import xzy.loshine.nga.ui.login.LoginModule
+import xzy.loshine.nga.ui.reply.ReplyActivity
+import xzy.loshine.nga.ui.reply.ReplyModule
 import xzy.loshine.nga.ui.topic.TopicActivity
 import xzy.loshine.nga.ui.topic.TopicModule
 
@@ -36,4 +38,8 @@ interface ActivityBindingModule {
     @ActivityScoped
     @ContributesAndroidInjector(modules = [ImagePreviewModule::class])
     fun imagePreviewActivity(): ImagePreviewActivity
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = [ReplyModule::class])
+    fun replyActivity(): ReplyActivity
 }

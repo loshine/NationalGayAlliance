@@ -29,6 +29,7 @@
         <activity android:name=".ui.forum.ForumActivity" />
         <activity android:name=".ui.topic.TopicActivity" />
         <activity android:name=".ui.image.ImagePreviewActivity" />
+        <activity android:name=".ui.reply.ReplyActivity" />
     </application>
 
 </manifest>

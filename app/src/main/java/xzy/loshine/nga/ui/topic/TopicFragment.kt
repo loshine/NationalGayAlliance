@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.orhanobut.logger.Logger
+import io.reactivex.Flowable
 import kotlinx.android.synthetic.main.fragment_topic.*
 import xzy.loshine.nga.R
 import xzy.loshine.nga.di.scopes.ActivityScoped
@@ -94,26 +95,27 @@ class TopicFragment @Inject constructor() : BaseFragment(R.layout.fragment_topic
     }
 
     private fun loadFirst() {
-        addDisposable(viewModel.loadFirst()
-                .observeOn(schedulerProvider.ui())
-                .subscribe({ adapter.setNewData(it) }, { Logger.e(it, "error") }))
+        addFlowable(viewModel.loadFirst())
     }
 
     private fun loadPrevious() {
-        addDisposable(viewModel.loadPrevious()
-                .observeOn(schedulerProvider.ui())
-                .subscribe({ adapter.setNewData(it) }, { Logger.e(it, "error") }))
+        addFlowable(viewModel.loadPrevious())
     }
 
     private fun loadNext() {
-        addDisposable(viewModel.loadNext()
-                .observeOn(schedulerProvider.ui())
-                .subscribe({ adapter.setNewData(it) }, { Logger.e(it, "error") }))
+        addFlowable(viewModel.loadNext())
     }
 
     private fun loadLast() {
-        addDisposable(viewModel.loadLast()
+        addFlowable(viewModel.loadLast())
+    }
+
+    private fun addFlowable(flowable: Flowable<List<TopicRowUiModel>>) {
+        addDisposable(flowable
                 .observeOn(schedulerProvider.ui())
-                .subscribe({ adapter.setNewData(it) }, { Logger.e(it, "error") }))
+                .subscribe({
+                    adapter.setNewData(it)
+                    recycler_view.scrollToPosition(0)
+                }, { Logger.e(it, "error") }))
     }
 }

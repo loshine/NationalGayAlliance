@@ -24,7 +24,7 @@ import javax.inject.Inject
 
 
 class ForumTopicAdapter @Inject constructor() :
-        BaseQuickAdapter<ForumTopicUiModel, BaseViewHolder>(R.layout.item_forum_topic) {
+        BaseQuickAdapter<ForumTopicUiModel, BaseViewHolder>(R.layout.recycler_item_forum_topic) {
 
     private val colorRedSpan by lazy { ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.title_red)) }
     private val colorBlueSpan by lazy { ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.title_blue)) }
