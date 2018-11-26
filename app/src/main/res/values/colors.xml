@@ -5,9 +5,9 @@
     <color name="colorAccent">#A5D6A7</color>
     <color name="colorBackground">#fff9e3</color>
     <color name="colorDivider">#BDBDBD</color>
+    <color name="colorTabNormal">#BCAAA4</color>
 
     <color name="color_menu_navigation_bg">#26000000</color>
-    <color name="colorTabNormal">#BCAAA4</color>
 
     <color name="white">#FFFFFF</color>
 
@@ -19,4 +19,11 @@
 
     <color name="type_lock">#C58080</color>
     <color name="type_assemble">#A0B4F0</color>
+
+    <color name="colorPrimary_night">#000000</color>
+    <color name="colorPrimaryDark_night">#000000</color>
+    <color name="colorAccent_night">#A5D6A7</color>
+    <color name="colorBackground_night">#000000</color>
+    <color name="colorDivider_night">#33FFFFFF</color>
+    <color name="colorTabNormal_night">#BCAAA4</color>
 </resources>

@@ -11,6 +11,22 @@
         android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent" />
 
+    <EditText
+        android:id="@+id/edit_text"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autofillHints="@string/hint_say_something"
+        android:background="@null"
+        android:gravity="top|start"
+        android:hint="@string/hint_say_something"
+        android:inputType="text"
+        android:padding="12dp"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/action_format_color"
         android:layout_width="0dp"
@@ -27,9 +43,9 @@
     <ImageView
         android:id="@+id/action_format_size"
         android:layout_width="0dp"
-        android:scaleType="center"
         android:layout_height="0dp"
         android:padding="12dp"
+        android:scaleType="center"
         android:src="@drawable/ic_format_size"
         android:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/bottom_bg"
@@ -41,8 +57,8 @@
         android:id="@+id/action_format_bold"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scaleType="center"
         android:padding="12dp"
+        android:scaleType="center"
         android:src="@drawable/ic_format_bold"
         android:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/bottom_bg"
@@ -81,9 +97,9 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="12dp"
+        android:scaleType="center"
         android:src="@drawable/ic_format_strikethrough"
         android:tint="@color/white"
-        android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="@id/bottom_bg"
         app:layout_constraintEnd_toStartOf="@+id/action_format_list"
         app:layout_constraintStart_toEndOf="@id/action_format_underline"
@@ -94,13 +110,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="12dp"
-        android:src="@drawable/format_list_bulleted"
         android:scaleType="center"
+        android:src="@drawable/format_list_bulleted"
         android:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/bottom_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/action_format_strikethrough"
         app:layout_constraintTop_toTopOf="@id/bottom_bg" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

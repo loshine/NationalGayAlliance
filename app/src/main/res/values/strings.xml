@@ -19,5 +19,6 @@
     <string name="action_page_next">Next</string>
     <string name="action_comment">Comment</string>
     <string name="just_now">just now</string>
+    <string name="hint_say_something">Say something</string>
 
 </resources>

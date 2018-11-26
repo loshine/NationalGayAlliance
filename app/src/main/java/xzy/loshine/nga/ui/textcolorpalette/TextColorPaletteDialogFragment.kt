@@ -23,6 +23,12 @@ class TextColorPaletteDialogFragment @Inject constructor() : DaggerDialogFragmen
         val view = LayoutInflater.from(context!!).inflate(R.layout.dialog_text_color_palette, null)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
+        adapter.setOnItemClickListener { _, _, position ->
+            if (targetFragment != null && targetFragment is Callback) {
+                (targetFragment as Callback).onColorSelected(adapter.data[position])
+            }
+            dismiss()
+        }
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(context, 6)
         return AlertDialog.Builder(context!!)
@@ -30,5 +36,9 @@ class TextColorPaletteDialogFragment @Inject constructor() : DaggerDialogFragmen
                 .setView(view)
                 .setNegativeButton(android.R.string.cancel) { _, _ -> dismiss() }
                 .create()
+    }
+
+    interface Callback {
+        fun onColorSelected(colorPair: Pair<String, Int>)
     }
 }

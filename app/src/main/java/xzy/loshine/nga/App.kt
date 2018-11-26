@@ -7,6 +7,7 @@ import dagger.android.support.DaggerApplication
 import io.paperdb.Paper
 import xzy.loshine.nga.di.components.DaggerAppComponent
 
+
 class App : DaggerApplication() {
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {

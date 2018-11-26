@@ -19,4 +19,5 @@
     <string name="action_page_next">下一页</string>
     <string name="action_comment">评论</string>
     <string name="just_now">刚才</string>
+    <string name="hint_say_something">说些什么吧</string>
 </resources>
